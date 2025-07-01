@@ -21,7 +21,7 @@ Backend: The client sends a request, and the server responds.
 
 ---
 
-## 2. Features of NodeJS
+## 2. Features of NodeJS:
 
 - Designed to perform **non-blocking operations** by default, making it suitable for I/O-heavy tasks.
 - Supports **TCP/UDP sockets**.
@@ -29,7 +29,19 @@ Backend: The client sends a request, and the server responds.
 - Enables JavaScript to run on the server, handling HTTP requests, file operations, and other server-side functionalities.
 - Code can be organized into reusable modules using `require()`.
 
----
 
 > **Note:**  
 > In NodeJS, there is **no window object**, **no DOM manipulation**, **no BOM (Browser Object Model)**, and **no web-specific APIs** (like LocalStorage, sessionStorage, etc.).
+---
+## 3. JavaScript on Client Side:
+- Helps to interact with web Page.
+- **Update Content:** Allows changes to the web page.
+- Gets HTML, images,.. from the Server.
+---
+## 4. JavaScript on Server Side:
+- **Database Management:** stores, retrieves & manages data through operation like **CURD**(Create, Read, Update, Delete).
+- **Authentication:** Verifies user identities to control access to the system.
+- **Authorization:** Determines what authenticated user are allowed to do by managing permission and access controls.
+- **Input Validation:** Check incoming data for correctness, completeness and security to prevent data entry errors.
+- **Session Management:** Track user activity across various request to maintain state and manage user-specific settings.
+--- 
