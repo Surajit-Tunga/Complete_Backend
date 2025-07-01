@@ -1,13 +1,11 @@
 # Backend_Zero-to-Hero
 
-Backend: The client sends a request, and the server responds.
-
 **Playlist:** [YouTube](https://youtube.com/playlist?list=PL78RhpUUKSwdbr5GMk0GG5LpcWB-MIj2e&si=ssTx-0zRuo2yIt5z)
 
 **Pre-requisites:** Understanding of JavaScript
 
 ---
-# INTRODUCTION:
+# INTRODUCTION
 
 ## 1. What is NodeJS?
 
@@ -22,7 +20,7 @@ Backend: The client sends a request, and the server responds.
 
 ---
 
-## 2. Features of NodeJS:
+## 2. Features of NodeJS
 
 - Designed to perform **non-blocking operations** by default, making it suitable for I/O-heavy tasks.
 - Supports **TCP/UDP sockets**.
@@ -31,15 +29,15 @@ Backend: The client sends a request, and the server responds.
 - Code can be organized into reusable modules using `require()`.
 
 
-> **Note:**  
+> **Note**  
 > In NodeJS, there is **no window object**, **no DOM manipulation**, **no BOM (Browser Object Model)**, and **no web-specific APIs** (like LocalStorage, sessionStorage, etc.).
 ---
-## 3. JavaScript on Client Side:
+## 3. JavaScript on Client Side
 - Helps to interact with web Page.
 - **Update Content:** Allows changes to the web page.
 - Gets HTML, images,.. from the Server.
 ---
-## 4. JavaScript on Server Side:
+## 4. JavaScript on Server Side
 - **Database Management:** stores, retrieves & manages data through operation like **CURD**(Create, Read, Update, Delete).
 - **Authentication:** Verifies user identities to control access to the system.
 - **Authorization:** Determines what authenticated user are allowed to do by managing permission and access controls.
@@ -54,19 +52,23 @@ Backend: The client sends a request, and the server responds.
 ## 5. Server architechture
 ![](./Note-Img/Server.png)
 
-### Nodejs Server will:
+### Nodejs Server will
 - Create server and listen to incoming requests.
 - Validation, connect to database, Processing of data.
 - Return Response.
 
 ---
-# INSTALLATION:
+## Client side vs Server Side
+- The client sends a request, and the server responds.
+![](./Note-Img/user.png)
+
+# INSTALLATION
 
 ## 1. Install Node.js
 
 First, install [Node.js](https://nodejs.org/) on your system. Node.js comes with npm (Node Package Manager), which is required for installing React and its dependencies.
 
-**Verify installation:**
+**Verify installation**
 
 ```bash
 node --version
@@ -78,7 +80,7 @@ If all of the above commands return a version number, your installation is corre
 
 ---
 
-## 2. Executing JS File Using NOde:
+## 2. Executing JS File Using NOde
 - create a js file:
 ```js
 console.log("hello");
@@ -92,7 +94,7 @@ node name.js
 
 ---
 
-## 3. REPL:
+## 3. REPL
 - R(Read) E(Eval) P(Print) L(Loop).
 - Execute JS Code interactively.
 - Ideal for testing, debugging..
