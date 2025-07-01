@@ -44,4 +44,11 @@ Backend: The client sends a request, and the server responds.
 - **Authorization:** Determines what authenticated user are allowed to do by managing permission and access controls.
 - **Input Validation:** Check incoming data for correctness, completeness and security to prevent data entry errors.
 - **Session Management:** Track user activity across various request to maintain state and manage user-specific settings.
+- API Management 
+- Error Handling
+- Security Measures
+- Data Encryption
+- Logging and Monitoring
 --- 
+
+!(./Note-Img/Server.png)
