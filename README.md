@@ -50,5 +50,5 @@ Backend: The client sends a request, and the server responds.
 - Data Encryption
 - Logging and Monitoring
 --- 
-
-!(./Note-Img/Server.png)
+## Server architechture
+![](./Note-Img/Server.png)
