@@ -108,4 +108,17 @@ node
 - To exit press ctrl+c twice.
 
 ---
-1.33.21
+#  Node Server
+
+## How DNS Works?
+![](./Note-Img/DNS.png)
+- **DNS:**Domain Name Service
+- User Types a Domain (www.google.com) into the browser.
+- The browser sends a DNS query to resolve the domain into in IP address.
+- **DNS Server:** Provides the correct ip address for the domain.
+- Then the browser uses the IP to connect the web Server & loads the website.
+
+**NOTE**
+- **Root DNS:** Starting point of DNS resolution. It directs queries to the correct TDL server(.com, .in......).
+- **TDL (Top Level Domain) DNS:** handel Queries for specific top level domain.
+- **Authoritive DNS:** Connect the actual IP address of the domain and answer DNS queries.(like google.com)
