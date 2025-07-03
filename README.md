@@ -195,3 +195,7 @@ Server.listen(PORT, ()=>{
 ```
 - Now run the code ( in terminal: node Name.js )
 - then open localhost:3000 in your browser and check the terminal.
+ ---
+ ## Request & Response
+
+ 
