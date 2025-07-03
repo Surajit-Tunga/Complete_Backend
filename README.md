@@ -109,6 +109,7 @@ node
 - To exit press ctrl+c twice.
 
 ---
+
 #  Node Server
 
 ## 1.How DNS Works?
@@ -196,6 +197,64 @@ Server.listen(PORT, ()=>{
 - Now run the code ( in terminal: node Name.js )
 - then open localhost:3000 in your browser and check the terminal.
  ---
- ## Request & Response
 
- 
+ # Request & Response
+
+## 1. Node lifecycle & NodeLoop
+
+![](./Note-Img/Nodecycle.png)
+
+---
+## 2. How to exit event loop
+
+```js
+const http = require('http'); 
+const Server = http.createServer((req, res) =>{
+    console.log(req);
+    process.exit(); // Stops the Event Loop
+});
+
+const PORT = 3000;
+Server.listen(PORT, ()=>{
+    console.log(`Server Running on Localhost:${PORT}`)
+});
+```
+---
+
+## 3. Request object
+
+```js
+const http = require('http'); 
+const Server = http.createServer((req, res) =>{
+    console.log(req.url, req.method, req.headers); // request objects
+});
+
+const PORT = 3000;
+Server.listen(PORT, ()=>{
+    console.log(`Server Running on Localhost:${PORT}`)
+});
+```
+---
+
+## 4. Sending Response
+
+```js
+const http = require('http'); 
+const Server = http.createServer((req, res) =>{
+    console.log(req.url, req.method, req.headers);
+    res.setHeader('Content-Type', 'text/html');
+    res.write('<html>');
+    res.write('<head><title>Complete Backend</title></head>');
+    res.write('<body><h1>Complete Backend</h1></body>');
+    res.write('</html>');
+    res.end();
+});
+
+const PORT = 3000;
+Server.listen(PORT, ()=>{
+    console.log(`Server Running on Localhost:${PORT}`)
+});
+```
+---
+
+## 5. 
