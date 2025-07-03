@@ -110,7 +110,7 @@ node
 ---
 #  Node Server
 
-## How DNS Works?
+## 1.How DNS Works?
 ![](./Note-Img/DNS.png)
 - **DNS:**Domain Name Service
 - User Types a Domain (www.google.com) into the browser.
@@ -123,4 +123,12 @@ node
 - **TDL (Top Level Domain) DNS:** handel Queries for specific top level domain.
 - **Authoritive DNS:** Connect the actual IP address of the domain and answer DNS queries.(like google.com)
 
-![](DNSWORK.png)
+![](./Note-Img/DNSWORK.png)
+
+---
+
+## 2. How Web Works:
+
+![](./Note-Img/Web.png)
+
+- Client Request Initiation--> DNS Resolution --> TCP Connection --> HTTP Request --> Server Processing --> HTTP Response --> Network transmission --> Client Recive Response --> Rendering.
