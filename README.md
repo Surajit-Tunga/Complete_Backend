@@ -122,3 +122,4 @@ node
 - **Root DNS:** Starting point of DNS resolution. It directs queries to the correct TDL server(.com, .in......).
 - **TDL (Top Level Domain) DNS:** handel Queries for specific top level domain.
 - **Authoritive DNS:** Connect the actual IP address of the domain and answer DNS queries.(like google.com)
+![](DNSWORK.png)
