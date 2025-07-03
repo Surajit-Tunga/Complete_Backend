@@ -60,6 +60,7 @@
 ---
 ## Client side vs Server Side
 - The client sends a request, and the server responds.
+
 ![](./Note-Img/user.png)
 
 # INSTALLATION
