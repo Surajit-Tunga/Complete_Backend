@@ -179,11 +179,18 @@ function requestListener(req, res) {
 
 http.createServer(requestListener);
 ```
-- Or in simple
+- Or 
 ```js
 const http = require('http'); 
 
-http.createServer((req, res) =>{
+const Server = http.createServer((req, res) =>{
     console.log(req);
 });
+
+const PORT = 3000;
+Server.listen(PORT, ()=>{
+    console.log(`Server Running on Localhost:${PORT}`)
+});
 ```
+- Now run the code ( in terminal: node Name.js )
+- then open localhost:3000 in your browser and check the terminal.
