@@ -1,4 +1,5 @@
 const http = require('http'); 
+const fs = require('fs');
 const Server = http.createServer((req, res) =>{
     console.log(req.url, req.method, req.headers);
 
@@ -20,7 +21,11 @@ const Server = http.createServer((req, res) =>{
         res.write('</body>');
         res.write('</html>');
         return res.end();
-    } 
+    } else if ( req.url.toLowerCase()==="/submit-details" && req.method=="POST") {
+        fs.writeFileSync('user.txt', 'Surajit');
+        res.statusCode = 302; // HTTP status for redirection
+        res.setHeader('Location', '/') // Redirect location
+    }
 
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
