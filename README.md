@@ -385,15 +385,20 @@ Server.listen(PORT, ()=>{
     console.log(`Server Running on Localhost:${PORT}`)
 });
 ```
-# Practise Set
-- Create a page that shows nav bar with 
-- a. Home
-- b. Men
-- c. Women
-- d. kids
-- e. Cart
-- clicking each link navigate to that sec and welcome to the section text is shwom 
-- 
+## Practice Set
+
+Create a page that shows a nav bar with:
+- Home
+- Men
+- Women
+- Kids
+- Cart
+
+Clicking each link navigates to that section and "welcome to the section" text is shown.
+
+<details>
+  <summary>See Code (click to expand)</summary>
+
 ```js
 const http = require('http'); 
 
@@ -520,3 +525,4 @@ Server.listen(PORT, ()=> {
     console.log(`website is running on: Localhost:${PORT}`)
 })
 ```
+</details>
