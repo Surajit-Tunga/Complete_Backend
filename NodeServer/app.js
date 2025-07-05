@@ -23,14 +23,33 @@ const Server = http.createServer((req, res) =>{
         return res.end();
     } else if ( req.url.toLowerCase()==="/submit-details" && req.method=="POST") {
 
+        const body= [];
+
       req.on('data', chunk => {
     // Whenever a small piece (chunk) of data arrives from the client,
     // this function runs and 'chunk' contains that piece of data.
     // We print (log) the chunk to see what data is coming in.
     console.log(chunk);
+    // 'body' is an array containing multiple Buffer objects (chunks of data).
+    body.push(chunk);
 });
 
-        fs.writeFileSync('user.txt', 'Surajit');
+     req.on('end', ()=>{
+       const fullBody = Buffer.concat(body).toString();
+       //Buffer.concat(body) joins all these Buffer chunks into a single Buffer. & .toString() converts the combined Buffer into a readable string.
+       console.log(fullBody);
+
+       const  para = new URLSearchParams(fullBody);
+
+       const Body= {};
+       for (const [key, val] of para.entries()) {
+          Body[key]=val;
+       }
+       console.log(Body);
+        fs.writeFileSync('user.txt', JSON.stringify(Body));
+     })
+
+       
         res.statusCode = 302; // HTTP status for redirection
         res.setHeader('Location', '/') // Redirect location
     }
