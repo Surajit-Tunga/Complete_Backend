@@ -298,6 +298,7 @@ Server.listen(PORT, ()=>{
 });
 ```
 </details>
+
 ---
 
 ## 6. Taking user input
@@ -346,6 +347,7 @@ Server.listen(PORT, ()=>{
 ```
 
 </details>
+
 ---
 
 ## 7. Redirecting Requests
@@ -397,6 +399,9 @@ Server.listen(PORT, ()=>{
 });
 ```
 </details>
+
+---
+
 ## Practice Set
 
 Create a page that shows a nav bar with:
