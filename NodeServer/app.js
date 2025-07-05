@@ -1,7 +1,7 @@
 const http = require('http'); 
 const fs = require('fs');
 const Server = http.createServer((req, res) =>{
-    console.log(req.url, req.method, req.headers);
+    console.log(req.url, req.method,);
 
     if (req.url==='/') {
         res.setHeader('Content-Type', 'text/html');
@@ -22,6 +22,14 @@ const Server = http.createServer((req, res) =>{
         res.write('</html>');
         return res.end();
     } else if ( req.url.toLowerCase()==="/submit-details" && req.method=="POST") {
+
+      req.on('data', chunk => {
+    // Whenever a small piece (chunk) of data arrives from the client,
+    // this function runs and 'chunk' contains that piece of data.
+    // We print (log) the chunk to see what data is coming in.
+    console.log(chunk);
+});
+
         fs.writeFileSync('user.txt', 'Surajit');
         res.statusCode = 302; // HTTP status for redirection
         res.setHeader('Location', '/') // Redirect location
