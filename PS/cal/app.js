@@ -1,7 +1,7 @@
 const http = require('http'); 
-const reqHandler = require('./user');
+const requestHandler =require('./handler')
 
-const server = http.createServer(reqHandler); // lowercase
+const server = http.createServer(requestHandler); 
 
 const PORT = 3000;
 server.listen(PORT, () => {

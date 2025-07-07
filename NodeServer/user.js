@@ -64,4 +64,4 @@ const reqHandler = ((req, res) =>{
     
 });
 
-module.export =reqHandler;
+module.exports =reqHandler;
