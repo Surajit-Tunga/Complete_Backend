@@ -878,7 +878,7 @@ server.listen(PORT, () => {
 
 ---
 
-## Practice Set
+# Practice Set
 - Create a Calculator
 
 1. Create a new Node.js project named "Calculator".
@@ -897,3 +897,4 @@ Create another module to handle incoming requests.
 
 On the "/calculate-result" page, parse the user input, use the addition module to calculate the sum, and display the result on a new HTML page.
 4.10
+
