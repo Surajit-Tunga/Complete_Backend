@@ -1,4 +1,4 @@
-const sumreq =require(''
+const {sumReq} =require('./sumreq');
 
 const requestHandler = (req, res) =>{
   console.log(req.url, req.method)
@@ -41,6 +41,8 @@ const requestHandler = (req, res) =>{
 
         return res.end();
 
+  }  else if (req.url ==="/result" && req.method ==="POST") {
+    return sumReq(req, res);
   }
 
    res.setHeader('Content-Type', 'text/html');
