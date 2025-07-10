@@ -1,7 +1,7 @@
 # Parsing Request
 ## 1. Streams
 
-![Streams](./Note-Img/Streams.png)
+![Streams](../Note-Img/Streams.png)
 
 - **Stream**: A stream is a continuous flow of data, allowing data to be processed piece-by-piece rather than all at once.
 - **Duplex Stream**: A duplex stream is capable of both reading and writing data (e.g., a TCP socket).

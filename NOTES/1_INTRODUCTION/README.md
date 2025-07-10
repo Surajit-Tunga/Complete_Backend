@@ -43,7 +43,7 @@
 - Logging and Monitoring
 --- 
 ## 5. Server architechture
-![](./Note-Img/Server.png)
+![](../Note-Img/Server.png)
 
 ### Nodejs Server will
 - Create server and listen to incoming requests.
@@ -54,4 +54,4 @@
 ## Client side vs Server Side
 - The client sends a request, and the server responds.
 
-![](./Note-Img/user.png)
+![](../Note-Img/user.png)

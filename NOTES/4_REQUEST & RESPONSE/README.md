@@ -2,7 +2,7 @@
 
 ## 1. Node lifecycle & NodeLoop
 
-![](./Note-Img/Nodecycle.png)
+![](../Note-Img/Nodecycle.png)
 
 ---
 ## 2. How to exit event loop
