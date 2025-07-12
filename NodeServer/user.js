@@ -1,4 +1,5 @@
 
+const { error } = require('console');
 const fs = require('fs');
 
 const reqHandler = ((req, res) =>{
@@ -47,13 +48,16 @@ const reqHandler = ((req, res) =>{
           Body[key]=val;
        }
        console.log(Body);
-        fs.writeFileSync('user.txt', JSON.stringify(Body));
+        fs.writeFile('user.txt', JSON.stringify(Body)
+    ,  error => {
+            console.log('Data written succesfully');
+            res.statusCode = 302; // HTTP status for redirection
+            res.setHeader('Location', '/') // Redirect location
+            return res.end();
+        });
      })
-
-       
-        res.statusCode = 302; // HTTP status for redirection
-        res.setHeader('Location', '/') // Redirect location
-    }
+        
+    } else {
 
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
@@ -61,7 +65,7 @@ const reqHandler = ((req, res) =>{
     res.write('<body><h1>Complete Backend</h1></body>');
     res.write('</html>');
     res.end();
-    
+    }
 });
 
 module.exports =reqHandler;
