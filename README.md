@@ -5,3 +5,4 @@
 **Pre-requisites:** Understanding of JavaScript
 
 ---
+- [1. INTRODUCTION ](NOTES/1_INTRODUCTION/README.md)
