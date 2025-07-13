@@ -11,9 +11,14 @@ app.use("/",(req, res, next)=>{
 })
 
 
-app.use("/submit-details",(req, res, next)=>{
+app.post("/submit-details",(req, res, next)=>{
     console.log("Came in second middleware", req.url, req.method);
      res.send('<p>Welcome to middleware</p>');
+})
+
+app.use("/",(req, res, next)=>{
+    console.log("Came in First middleware 2", req.url, req.method);
+  res.send('<p>Welcome to middleware 2</p>');
 })
 
 

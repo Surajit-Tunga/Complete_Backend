@@ -95,3 +95,18 @@ app.use("/submit-details",(req, res, next)=>{
 - can not call next() after send()
 - "/ " matches everything 
 - calling res.send() imlicitly calls res.end().
+
+## Practice Set
+- Create a new project.
+
+1. Install nodemon and express.
+
+2. Add two dummy middleware that logs request path and request method respectively.
+
+3. Add a third middleware that returns a response.
+
+4. Now add handling using two more middleware that handle path /, a request to /contact-us page.
+
+5. Contact us should return a form with name and email as input fields that submits to /contact-us page als
+
+6. Also handle POST incoming request to /contact-u path using a separate middleware.
