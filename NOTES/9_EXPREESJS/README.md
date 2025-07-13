@@ -79,3 +79,19 @@ app.use((req, res, next)=>{
 ---
 
 ## Handling Routes
+
+```js
+app.use("/",(req, res, next)=>{
+    console.log("Came in First middleware", req.url, req.method);
+    next() // here no next is present because the next middleware is for /submit-details.
+})
+
+app.use("/submit-details",(req, res, next)=>{
+    console.log("Came in second middleware", req.url, req.method);
+     res.send('<p>Welcome to middleware</p>');
+})
+```
+- Order Matters.
+- can not call next() after send()
+- "/ " matches everything 
+- calling res.send() imlicitly calls res.end().
