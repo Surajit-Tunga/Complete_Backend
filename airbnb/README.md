@@ -1,0 +1,1 @@
+- There are two type of people 1. user 2. host
