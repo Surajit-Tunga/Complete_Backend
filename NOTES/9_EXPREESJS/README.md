@@ -167,3 +167,36 @@ app.listen(PORT, ()=> {
 });
    ```
 </details>   
+
+## Parsing Request
+
+```bash
+npm install body-parser
+```
+```js
+const bodyParser = require('body-parser');
+
+//----
+app.get("/contact",(req, res, next)=> {
+    console.log("contact Middleware",req.url, req.method);
+   res.send(`
+    <p>contact us</p>
+    <form action="/contact" method="POST">
+      <input type="text" name="name" placeholder="Enter your name" />
+      <input type="email" name="email" placeholder="Enter your email" />
+      <input type="submit"/>
+    </form>
+    `)
+})
+
+app.use(bodyParser.urlencoded());
+
+app.post("/contact",(req, res, next)=> {
+    console.log("contact post Middleware",req.url, req.method, req.body);
+     res.send("<p>Thank you for contact us.</p>")
+})
+
+//---
+```
+
+## 

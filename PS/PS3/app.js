@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -34,13 +35,13 @@ app.get("/contact",(req, res, next)=> {
       <input type="email" name="email" placeholder="Enter your email" />
       <input type="submit"/>
     </form>
-    
-    
     `)
 })
 
+app.use(bodyParser.urlencoded());
+
 app.post("/contact",(req, res, next)=> {
-    console.log("contact post Middleware",req.url, req.method);
+    console.log("contact post Middleware",req.url, req.method, req.body);
      res.send("<p>Thank you for contact us.</p>")
 })
 
