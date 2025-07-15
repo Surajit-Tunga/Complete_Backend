@@ -280,3 +280,23 @@ app.listen(PORT,()=>{
 
 app.use("/user",userRouter);
 app.use("/host",hostRouter);
+
+```
+
+## Adding HTML Files
+- Make views folder & create your html files there.
+```js
+const path = require('path');
+
+
+const express = require('express');
+
+
+const userRouter = express.Router();
+
+userRouter.get("/",(req, res, next)=>{
+    res.sendFile(path.join(__dirname, '../', 'views', 'home.html'))
+})
+
+module.exports =userRouter;
+```
