@@ -200,3 +200,78 @@ app.post("/contact",(req, res, next)=> {
 ```
 
 ## Express Router
+
+- Make a folder called routes and make your routes there 
+- eg. 
+- Routes/userRouter.js
+```js
+const express = require('express');
+const userRouter = express.Router();
+
+userRouter.get("/",(req, res, next)=>{
+    res.send(`
+        <p>Welcome to airbnb</p>
+        <a href="/host/add-home">Add Home</a>
+        `)
+})
+
+module.exports =userRouter;
+```
+- Routes/hostRouter.js
+```js
+const express = require('express');
+const hostRouter = express.Router();
+
+hostRouter.get("/host/add-home",(req, res, next)=>{
+    res.send(`
+        <P>Plese add your home.</p>
+        <form action="/host/add-home" method="POST">
+          <input type="text" name="houseName" placeholder="Enter your House Name" />
+          <input type="submit"/>
+       </form>
+        `)
+})
+
+hostRouter.post("/host/add-home",(req, res, next)=>{
+    console.log(req.body);
+    res.send(`
+        <P>Home added succesfully.</p>
+        <a href="/">Home</a>
+        `)
+})
+
+module.exports =hostRouter;
+```
+- app.js
+```js
+// External Module
+const express= require('express');
+
+// Import Routes
+const userRouter =require('./routes/userRouter');
+const hostRouter = require('./routes/hostRouter');
+
+
+const app = express();
+
+app.use((req, res, next)=>{
+    console.log(req.url, req.method);
+   next();
+})
+
+app.use(express.urlencoded());
+
+// It is a middleware in Express.js used to parse incoming requests with URL-encoded payloads, typically from HTML form submissions.
+// The parsed data is available on req.body.
+
+app.use(userRouter);
+
+app.use(hostRouter);
+
+const PORT = 3000;
+app.listen(PORT,()=>{
+    console.log(`the server is running at http://localhost:${PORT}`)
+}) 
+```
+
+
