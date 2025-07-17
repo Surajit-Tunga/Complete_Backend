@@ -16,3 +16,4 @@
 - [7. NPM & Tools ](NOTES/7_NPM&Tools/README.md)
 - [8. Errors & Debugging ](NOTES/8_Errors&Debugging/README.md)
 - [9. EXPREES JS ](NOTES/9_EXPREESJS/README.md)
+- [10. Styling With Tailwind CSS ](NOTES/10_TailwindCSS/README.md)
