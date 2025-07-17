@@ -7,6 +7,7 @@ const express= require('express');
 // Import Routes
 const userRouter =require('./routes/userRouter');
 const hostRouter = require('./routes/hostRouter');
+const rootDir = require("./utils/pathUtils")
 
 
 const app = express();
@@ -15,11 +16,12 @@ app.use(express.urlencoded());
 
 // It is a middleware in Express.js used to parse incoming requests with URL-encoded payloads, typically from HTML form submissions.
 // The parsed data is available on req.body.
+
 app.use(userRouter);
 app.use("/host",hostRouter);
 
 app.use((req, res, next)=>{
-    res.sendFile(path.join(__dirname, './', 'views', '404.html'))
+    res.sendFile(path.join(rootDir, 'views', '404.html'))
 })
 
 const PORT = 3000;

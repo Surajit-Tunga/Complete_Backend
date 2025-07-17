@@ -300,3 +300,39 @@ userRouter.get("/",(req, res, next)=>{
 
 module.exports =userRouter;
 ```
+## Using Path Helper
+- Create a folder called utils.
+- utils/path.js
+```js
+const path = require('path');
+
+module.exports = path.dirname(require.main.filename);
+```
+- in your routes
+```js
+const path = require('path');
+
+const express = require('express');
+const userRouter = express.Router();
+
+const rootDir = require("../utils/pathUtils")
+
+userRouter.get("/",(req, res, next)=>{
+    res.sendFile(path.join(rootDir, 'views', 'home.html'))
+})
+
+module.exports =userRouter;
+```
+---
+## Practise Set
+- Reuse the app from the last assignment
+
+1. Parse the body of the contact-us request and log it to console.
+
+2. Move the code to separate local modules and use the Express router to import and use them in app.js
+
+3. Move all the html code to html files and serve them using the file helper.
+
+4. Also add a 404 page for this app.
+
+-- [9. EXPREES JS ](PS/PS4)
