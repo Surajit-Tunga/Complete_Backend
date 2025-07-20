@@ -39,7 +39,7 @@ npx tailwindcss init
 ```
 - in your tailwind.config.js
 ```js
-content: ["./views/**/*.{html}"],
+content: ["./views/*.html"],
 ```
 - to use tailwiind in html files under views folder.
 - Then make a input.css folder under views:
@@ -57,3 +57,4 @@ content: ["./views/**/*.{html}"],
 npx tailwindcss -i ./views/input.css -o ./public/output.css --watch
 ```
 - keep this in your terminal sideby your server.
+- Now you can write tailwind and continue building.
