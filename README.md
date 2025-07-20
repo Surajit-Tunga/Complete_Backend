@@ -17,3 +17,5 @@
 - [8. Errors & Debugging ](NOTES/8_Errors&Debugging/README.md)
 - [9. EXPREES JS ](NOTES/9_EXPREESJS/README.md)
 - [10. Styling With Tailwind CSS ](NOTES/10_TailwindCSS/README.md)
+- [11. Dynamic UI Using EJS ](NOTES/11_DynamicUIUsingEJS/README.md)
+
