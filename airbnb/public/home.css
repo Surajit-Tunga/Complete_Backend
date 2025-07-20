@@ -1,0 +1,43 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #fff;
+  color: #484848;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical center */
+  align-items: center;     /* Horizontal center */
+  text-align: center;
+}
+
+/* Welcome text */
+p {
+  font-size: 2.5rem;
+  color: #FF5A5F;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* Styled link as bordered box */
+a {
+  text-decoration: none;
+  color: #FF5A5F;
+  border: 2px solid #FF5A5F;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  background-color: #FF5A5F;
+  color: white;
+}
