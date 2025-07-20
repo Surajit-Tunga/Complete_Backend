@@ -24,3 +24,36 @@ app.use(express.static(path.join(rootDir, 'public')))
 </body>
 </html>
 ```
+## Tailwind CSS
+- Responsive
+- Utility First
+- Highly Customizable
+- No external css file needed.
+- Purge CSS: Remove unused css.
+### Installation:
+```bash
+
+npm install -D tailwindcss@3 postcss autoprefixer
+npx tailwindcss init
+
+```
+- in your tailwind.config.js
+```js
+content: ["./views/**/*.{html}"],
+```
+- to use tailwiind in html files under views folder.
+- Then make a input.css folder under views:
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+- In your html
+```html
+<link rel="stylesheet" href="output.css">
+```
+- then in terminal:
+```bash
+npx tailwindcss -i ./views/input.css -o ./public/output.css --watch
+```
+- keep this in your terminal sideby your server.
