@@ -5,14 +5,14 @@ const hostRouter = express.Router();
 const rootDir = require("../utils/pathUtils")
 
 hostRouter.get("/add-home",(req, res, next)=>{
-    res.sendFile(path.join(rootDir, 'views', 'add-home.html'))
+    res.render('add-home',{ pageTitle: "Add Home"})
 })
 
 const registeredHouse =[];
 
 hostRouter.post("/add-home",(req, res, next)=>{
     registeredHouse.push({houseName: req.body.houseName});
-    res.sendFile(path.join(rootDir, 'views', 'homeadded.html'))
+    res.render('homeadded', { pageTitle: "Home added"})
 })
 
 exports.hostRouter =hostRouter;

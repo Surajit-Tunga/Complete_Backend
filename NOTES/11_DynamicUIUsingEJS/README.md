@@ -53,8 +53,8 @@ userRouter.get("/",(req, res, next)=>{
 
 module.exports =userRouter;
 ```
-
 ---
+
 ## EJS
 - EJS let's you embad JS within html.
 - USe <% %> for control flow & <%= %> for output.
@@ -108,3 +108,27 @@ module.exports =userRouter;
 ```js
 content: ["./views/**/*.ejs", "./views/**/*.html"],
 ```
+---
+
+## Working with Partials
+- If you want to re-use any part of your code then:
+- make a folder called partials under views & create your partials there.
+- eg. head.ejs
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= pageTitle %></title>
+  <link rel="stylesheet" href="/output.css" />
+```
+- Now the head is reuseable:  like this:
+- home.ejs
+```html
+<%- include('partials/head') %>
+</head>
+<body class="min-h-screen bg-gray-100">
+  <!-- Rest of your code -->
+```
+---
