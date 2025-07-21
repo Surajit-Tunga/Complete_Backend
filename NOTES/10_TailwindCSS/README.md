@@ -58,3 +58,16 @@ npx tailwindcss -i ./views/input.css -o ./public/output.css --watch
 ```
 - keep this in your terminal sideby your server.
 - Now you can write tailwind and continue building.
+
+- To Run Both Server and Tailwind
+
+```json
+"scripts": {
+  "dev": "concurrently \"npm run server\" \"npm run tailwind\"",
+  "server": "nodemon app.js",
+  "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch"
+},
+```
+```bash
+npm run dev
+```
