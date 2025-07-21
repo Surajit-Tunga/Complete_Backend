@@ -7,7 +7,6 @@ const rootDir = require("../utils/pathUtils");
 const { registeredHouse } = require('./hostRouter');
 
 userRouter.get("/",(req, res, next)=>{
-    console.log(registeredHouse);
     res.render('home', {registeredHouse: registeredHouse, pageTitle: "Airbnb Home"});
 })
 

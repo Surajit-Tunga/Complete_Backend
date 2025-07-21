@@ -12,7 +12,6 @@ const registeredHouse =[];
 
 hostRouter.post("/add-home",(req, res, next)=>{
     registeredHouse.push(req.body);
-    console.log(registeredHouse);
     res.render('homeadded', { pageTitle: "Home added"})
 })
 
