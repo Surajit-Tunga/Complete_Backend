@@ -17,8 +17,8 @@ module.exports = class Home {
         registeredHouse.push(this);
         const homeDataPath= path.join(rootDir, 'data', 'home.json');
         fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
-            console.log(err);
-        });
+            console.log(err)
+        })
     }
 
     static fetchAll() {

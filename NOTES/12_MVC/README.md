@@ -120,5 +120,5 @@ module.exports = class Home {
 }
 ```
 - all the data will saved in home.json in data folder.
-
-
+---
+## Read The Data from files
