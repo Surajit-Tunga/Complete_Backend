@@ -38,7 +38,6 @@ hostRouter.get("/add-home", getAddHome);
 hostRouter.post("/add-home",postAddHome);
 
 exports.hostRouter =hostRouter;
-exports.registeredHouse= registeredHouse;
 ```
 ---
 
