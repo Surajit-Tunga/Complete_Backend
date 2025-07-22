@@ -8,7 +8,10 @@
 - Routes are a part of Controllers.
 - **Purpose:** MVC separates concerns within an application, making it easier to.
 ![MVC](../Note-Img/mvc.png)
-### How to add Controllers?
+
+---
+
+## How to add Controllers?
 - Make a folder called controller and make your controllers there.
 - eg.
 - controllers/homes.js
@@ -37,3 +40,7 @@ hostRouter.post("/add-home",postAddHome);
 exports.hostRouter =hostRouter;
 exports.registeredHouse= registeredHouse;
 ```
+---
+
+## How to Add Models?
+10.37
