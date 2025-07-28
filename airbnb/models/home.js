@@ -3,8 +3,6 @@ const path = require('path');
 const rootDir = require('../utils/pathUtils')
 
 
-const registeredHouse =[];
-
 module.exports = class Home {
     constructor(houseName, price, location, rating){
         this.houseName = houseName;
@@ -21,7 +19,14 @@ module.exports = class Home {
         })
     }
 
-    static fetchAll() {
-        return registeredHouse;
-    }
+    static fetchAll(callback) {
+        const homeDataPath= path.join(rootDir, 'data', 'home.json');
+        fs.readFile(homeDataPath, (err, data) => {
+            if (!err) {
+              callback(JSON.parse(data));
+            } else {
+            callback([]);
+            }
+        });
+    } 
 }

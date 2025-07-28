@@ -122,3 +122,63 @@ module.exports = class Home {
 - all the data will saved in home.json in data folder.
 ---
 ## Read The Data from files
+- Model/ home.js
+```js
+const fs = require('fs');
+const path = require('path');
+const rootDir = require('../utils/pathUtils')
+
+
+module.exports = class Home {
+    constructor(houseName, price, location, rating){
+        this.houseName = houseName;
+        this.price =price;
+        this.location = location;
+        this.rating = rating;
+    }
+
+    save() {
+        registeredHouse.push(this);
+        const homeDataPath= path.join(rootDir, 'data', 'home.json');
+        fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
+            console.log(err)
+        })
+    }
+
+    static fetchAll(callback) {
+        const homeDataPath= path.join(rootDir, 'data', 'home.json');
+        fs.readFile(homeDataPath, (err, data) => {
+            if (!err) {
+              callback(JSON.parse(data));
+            } else {
+            callback([]);
+            }
+        });
+    } 
+}
+```
+- controller/homes.js
+```js
+const Home = require("../models/home");
+
+exports.getAddHome =(req, res, next)=>{
+    res.render('add-home',{ pageTitle: "Add Home"})
+}
+
+exports.postAddHome = (req, res, next)=>{
+
+    const {houseName,price,location, rating} = req.body;
+
+    const home = new Home(houseName,price,location, rating);
+    home.save();
+
+    res.render('homeadded', { pageTitle: "Home added"})
+}
+exports.getHome = (req, res, next)=>{
+    const registeredHouse = Home.fetchAll((registeredHouse) => {
+          res.render('home', {registeredHouse: registeredHouse, pageTitle: "Airbnb Home"});
+    });
+}
+```
+---
+
