@@ -138,11 +138,13 @@ module.exports = class Home {
     }
 
     save() {
-        registeredHouse.push(this);
-        const homeDataPath= path.join(rootDir, 'data', 'home.json');
-        fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
-            console.log(err)
+        Home.fetchAll((registeredHouse) => {
+              registeredHouse.push(this);
+              const homeDataPath= path.join(rootDir, 'data', 'home.json');
+              fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
+              console.log(err)
         })
+        });      
     }
 
     static fetchAll(callback) {
