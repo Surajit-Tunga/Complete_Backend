@@ -1,7 +1,7 @@
 const Home = require("../models/home");
 
 exports.getAddHome =(req, res, next)=>{
-    res.render('add-home',{ pageTitle: "Add Home"})
+    res.render('host/add-home',{ pageTitle: "Add Home"})
 }
 
 exports.postAddHome = (req, res, next)=>{
@@ -11,10 +11,10 @@ exports.postAddHome = (req, res, next)=>{
     const home = new Home(houseName,price,location, rating);
     home.save();
 
-    res.render('homeadded', { pageTitle: "Home added"})
+    res.render('host/homeadded', { pageTitle: "Home added"})
 }
 exports.getHome = (req, res, next)=>{
     const registeredHouse = Home.fetchAll((registeredHouse) => {
-          res.render('home', {registeredHouse: registeredHouse, pageTitle: "Airbnb Home"});
+          res.render('store/home', {registeredHouse: registeredHouse, pageTitle: "Airbnb Home"});
     });
 }
