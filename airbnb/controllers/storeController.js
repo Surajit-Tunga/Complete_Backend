@@ -9,3 +9,7 @@ exports.getHome = (req, res, next)=>{
 exports.getBookings = (req, res, next) => {
     res.render('store/bookings', { pageTitle: "Your Bookings" });
 };
+
+exports.getFavourites = (req, res, next) => {
+    res.render('store/fav-list', { pageTitle: "Your Favourites" });
+};
