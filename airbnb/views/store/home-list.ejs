@@ -28,16 +28,27 @@
             </h3>
             <p class="text-sm text-gray-600"><span class="font-medium">📍 Location:</span> <%= home.location %></p>
             <p class="text-sm text-gray-600"><span class="font-medium">💰 Price:</span> ₹<%= home.price %>/night</p>
-            
-            <!-- Book Now Button -->
-            <div class="pt-3">
-              <a 
-                href="/book/<%= home._id %>" 
-                class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
-              >
-                Book Now
-              </a>
-            </div>
+<!-- Book Now & Details Buttons (Side by Side, Small) -->
+<div class="pt-3 flex space-x-2">
+  <!-- Book Now -->
+  <a 
+    href="/book/<%= home._id %>" 
+    class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-1.5 px-3 rounded-md transition duration-300"
+  >
+    Book
+  </a>
+
+  <!-- View Details -->
+  <a 
+    href="/details/<%= home._id %>" 
+    class="flex-1 text-center bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium py-1.5 px-3 rounded-md transition duration-300"
+  >
+    Details
+  </a>
+</div>
+
+
+
           </div>
         </div>
       <% }) %>
