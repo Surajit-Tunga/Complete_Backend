@@ -2,7 +2,7 @@
 
 ## What are The dynamic Paths:
 **Path Parameters:**
-- https://example.com/students/**john**/grades?order=asc
+- https://example.com/students/john/grades?order=asc
 - here john is user id , which is dynamic.
 
 **Query Parameters:**
