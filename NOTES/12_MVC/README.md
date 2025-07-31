@@ -183,5 +183,3 @@ exports.getHome = (req, res, next)=>{
 }
 ```
 ---
-
-11.42.23
