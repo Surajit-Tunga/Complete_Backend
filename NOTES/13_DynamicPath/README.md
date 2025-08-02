@@ -90,3 +90,6 @@ exports.getHomeDetails = (req, res, next) => {
   </main>
   <!-- Improve styling  -->
 ```
+---
+
+## 
