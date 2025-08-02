@@ -32,7 +32,7 @@
 <div class="pt-3 flex space-x-2">
   <!-- Book Now -->
   <a 
-    href="/book/<%= home._id %>" 
+    href="/homes/:home-id" 
     class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-1.5 px-3 rounded-md transition duration-300"
   >
     Book
@@ -40,7 +40,7 @@
 
   <!-- View Details -->
   <a 
-    href="/details/<%= home._id %>" 
+     href="/homes/<%= home.id %>"
     class="flex-1 text-center bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium py-1.5 px-3 rounded-md transition duration-300"
   >
     Details
