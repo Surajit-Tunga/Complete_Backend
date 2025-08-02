@@ -10,7 +10,7 @@
 
 ---
 
- ## Adding Home Details Page Using dynamic Path:
+## Adding Home Details Page Using dynamic Path:
 - Add Dynamic URL to the details button:
 ```html
 <a 
@@ -30,7 +30,6 @@ class="flex-1 text-center bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm fo
 // controller
 exports.getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
-    console.log(homeId);
     res.render('store/home-detail', { pageTitle: "Home Details", homeId: homeId});
 };
 ```
@@ -40,3 +39,6 @@ storeRouter.get("/homes/:homeId", storeController.getHomeDetails);
 ```
 
 ---
+
+## Showing Real Home Data:
+11.45
