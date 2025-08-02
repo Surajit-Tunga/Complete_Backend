@@ -94,3 +94,13 @@ exports.getHomeDetails = (req, res, next) => {
 
 ## add to fav:
 - Step1: Make a partial with a from & button that submits to /favourites path with ahidden input haiving home id value.
+```html
+<form action="/favourites">
+    <button type="submit" class="bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold py-1.5 px-1 rounded-lg transition duration-300">Add to favourites </button>
+    <input type="text" name="id" value="<%= home.id  %> "  hidden>
+</form>
+```
+```html
+<!-- add this partial to the home & details page -->
+ <%- include('../partials/fav') %>
+```
