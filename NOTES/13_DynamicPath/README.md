@@ -104,3 +104,5 @@ exports.getHomeDetails = (req, res, next) => {
 <!-- add this partial to the home & details page -->
  <%- include('../partials/fav') %>
 ```
+- add Router for handling POST request to /favourites path.
+34
