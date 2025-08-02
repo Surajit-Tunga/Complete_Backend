@@ -92,7 +92,7 @@ exports.getHomeDetails = (req, res, next) => {
 ```
 ---
 
-## add to fav:
+## Add to fav:
 - Step1: Make a partial with a from & button that submits to /favourites path with ahidden input haiving home id value.
 ```html
 <form action="/favourites">
@@ -105,4 +105,56 @@ exports.getHomeDetails = (req, res, next) => {
  <%- include('../partials/fav') %>
 ```
 - add Router for handling POST request to /favourites path.
-34
+```js
+storeRouter.post("/Favourites", storeController.addToFavourites);
+```
+- Make Controller for addToFavourites and log the body.
+```js
+exports.addToFavourites = (req, res, next) => {
+    console.log(req.body);
+    res.redirect('/favourites');
+}
+```
+---
+
+## Show the Fav Homes:
+- Create a new Model to handel Favourites, with 2 static method getFevourites to read and return to the UI & addFavourites to add home to database.
+```js
+// fav model
+const fs = require('fs');
+const path = require('path');
+const rootDir = require('../utils/pathUtils')
+
+const favDataPath= path.join(rootDir, 'data', 'fav.json');
+
+module.exports = class fav {
+     static addFavourites(id, callback) {
+         fav.getFavourites((favourites) => {
+                    if (favourites.includes(id)) {
+                        console.log("Home already in favourites");
+                    } else {
+                        favourites.push(id);
+                        const favDataPath= path.join(rootDir, 'data', 'fav.json');
+                        fs.writeFile(favDataPath, JSON.stringify(favourites), callback);
+                    }
+                });  
+     }
+     static getFavourites(callback){
+        fs.readFile(favDataPath, (err, data) => {
+          callback(!err ? JSON.parse(data) : []);
+        });
+     }
+    }
+```
+- update Controlller:
+```js
+exports.addToFavourites = (req, res, next) => {
+    console.log(req.body);
+    fav.addFavourites(req.body.id, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+    res.redirect('/favourites');
+}
+```

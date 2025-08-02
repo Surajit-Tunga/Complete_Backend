@@ -1,3 +1,4 @@
+const fav = require("../models/fav");
 const Home = require("../models/home");
 
 exports.getHome = (req, res, next)=>{
@@ -13,6 +14,16 @@ exports.getBookings = (req, res, next) => {
 exports.getFavourites = (req, res, next) => {
     res.render('store/fav-list', { pageTitle: "Your Favourites" });
 };
+
+exports.addToFavourites = (req, res, next) => {
+    console.log(req.body);
+    fav.addFavourites(req.body.id, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+    res.redirect('/favourites');
+}
 
 exports.getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
