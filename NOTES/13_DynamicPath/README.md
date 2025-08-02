@@ -93,3 +93,4 @@ exports.getHomeDetails = (req, res, next) => {
 ---
 
 ## add to fav:
+- Step1: Make a partial with a from & button that submits to /favourites path with ahidden input haiving home id value.

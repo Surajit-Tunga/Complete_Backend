@@ -37,12 +37,7 @@
             <!-- Buttons -->
             <div class="pt-4 flex justify-between gap-2">
               <!-- Add to Favourites -->
-              <form action="/favourites/add/<%= home.id %>" method="POST" class="flex-1">
-                <button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold py-1.5 rounded-md transition duration-300">
-                  Add to Fav
-                </button>
-              </form>
-
+              <%- include('../partials/fav', { home: home }) %>
               <!-- View Details -->
               <a 
                 href="/homes/<%= home.id %>" 
