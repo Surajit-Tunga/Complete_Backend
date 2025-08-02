@@ -13,3 +13,9 @@ exports.getBookings = (req, res, next) => {
 exports.getFavourites = (req, res, next) => {
     res.render('store/fav-list', { pageTitle: "Your Favourites" });
 };
+
+exports.getHomeDetails = (req, res, next) => {
+    const homeId = req.params.homeId;
+    console.log(homeId);
+    res.render('store/home-detail', { pageTitle: "Home Details", homeId: homeId});
+};
