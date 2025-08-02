@@ -158,3 +158,4 @@ exports.addToFavourites = (req, res, next) => {
     res.redirect('/favourites');
 }
 ```
+50
