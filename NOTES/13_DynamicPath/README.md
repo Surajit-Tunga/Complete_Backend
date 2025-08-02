@@ -92,4 +92,4 @@ exports.getHomeDetails = (req, res, next) => {
 ```
 ---
 
-## 
+## add to fav:
