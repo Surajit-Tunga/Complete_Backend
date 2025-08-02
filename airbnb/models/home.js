@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const rootDir = require('../utils/pathUtils')
 
+const homeDataPath= path.join(rootDir, 'data', 'home.json');
 
 module.exports = class Home {
     constructor(houseName, price, location, rating){
@@ -23,7 +24,6 @@ module.exports = class Home {
     }
 
     static fetchAll(callback) {
-        const homeDataPath= path.join(rootDir, 'data', 'home.json');
         fs.readFile(homeDataPath, (err, data) => {
             if (!err) {
               callback(JSON.parse(data));
@@ -32,4 +32,11 @@ module.exports = class Home {
             }
         });
     } 
+
+    static findById(homeId, callback) {
+        this.fetchAll(homes =>{
+            const home = homes.find(home => home.id === homeId);
+            callback(home);
+        })
+    }
 }
