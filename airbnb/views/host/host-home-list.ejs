@@ -35,14 +35,14 @@
             <div class="pt-4 mt-2 flex space-x-3">
               <!-- Edit Button -->
               <a 
-                href="/book/<%= home._id %>" 
+                href="/host/edit-home/<%= home.id %>?editing=true" 
                 class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
               >
                 Edit Home
               </a>
 
               <!-- Delete Button -->
-              <form action="/delete-home/<%= home._id %>" method="POST" class="flex-1">
+              <form action="/delete-home/<%= home.id %>" method="POST" class="flex-1">
                 <button 
                   type="submit" 
                   class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"

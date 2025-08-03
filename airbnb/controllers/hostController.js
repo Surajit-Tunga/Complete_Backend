@@ -1,7 +1,20 @@
 const Home = require("../models/home");
 
 exports.getAddHome =(req, res, next)=>{
-    res.render('host/add-home',{ pageTitle: "Add Home"})
+    res.render('host/edit-home',{ pageTitle: "Add Home", editing: false})
+}
+
+exports.getEditHome =(req, res, next)=>{
+    const homeId = req.params.homeId;
+    const editing = req.query.editing === 'true';
+
+    Home.findById(homeId, home=>{
+        if(!home) {
+            res.redirect('/host/host-home-list');
+        } else {
+            res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId, home: home});
+        }
+    })    
 }
 
 exports.getHostHome = (req, res, next)=>{

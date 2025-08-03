@@ -97,7 +97,7 @@ exports.getHomeDetails = (req, res, next) => {
 ```html
 <form action="/favourites">
     <button type="submit" class="bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold py-1.5 px-1 rounded-lg transition duration-300">Add to favourites </button>
-    <input type="text" name="id" value="<%= home.id  %> "  hidden>
+    <input type="text" name="id" value="<%= home.id %>"  hidden>
 </form>
 ```
 ```html
@@ -172,4 +172,85 @@ exports.getFavouritesList = (req, res, next) => {
 ```
 ```html
 <!-- update the ui -->
- 
+```
+---
+
+## Edit Home:
+- Step 1: Rename add-home.ejs to edit-home.ejs and fix the controller 
+- Step 2: Now make url for the editing page:
+```html
+<a 
+  href="/host/edit-home/<%= home.id %>?editing=true" 
+  class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
+>
+  Edit Home
+</a>
+```
+- Step 3: Make Router & Controller
+```js
+// HostRouter
+hostRouter.get("/edit-home/:homeId", getEditHome);
+```
+
+```js
+//hostController
+exports.getEditHome =(req, res, next)=>{
+    const homeId = req.params.homeId;
+    const editing = req.query.editing === 'true';
+    res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId})
+}
+```
+- Step 4: Update the controller to fetch the home detials & if not found then  redirect to /host/host-home-list otherwsie passing the data to view
+```js
+exports.getEditHome =(req, res, next)=>{
+    const homeId = req.params.homeId;
+    const editing = req.query.editing === 'true';
+
+    Home.findById(homeId, home=>{
+        if(!home) {
+            console.log("Home not found");
+            res.redirect('/host/host-home-list');
+        } else {
+            console.log("Home found", home);
+            res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId, home: home});
+        }
+    })    
+}
+```
+- Step5: Change The edit-home.ejs to show dynamic content:
+-     a. Different submit path
+-     b. Different button Text (Submit / Update)
+-     c. Pre-filled values to edit.
+
+```html
+<!-- Make the title dynamic for editing and add home -->
+  <p class="text-lg font-medium text-gray-700 mb-6"> <%= editing ? "Edit your home." : "Add your home." %></p>
+```
+- **Note** Update the getAddHome controller:
+```js
+exports.getAddHome =(req, res, next)=>{
+    res.render('host/edit-home',{ pageTitle: "Add Home", editing: false})
+}
+```
+```html
+<!-- Change from Action -->
+  <form action="/host/<%= editing ? 'edit-home/': 'add-home' %>" method="POST" class="space-y-4">
+
+<!-- Update the Button -->
+ <input 
+    type="submit" 
+    value="<%= editing ? 'Update' : 'Submit' %>" 
+    class="w-full bg-red-500 text-white font-semibold py-2 rounded-md hover:bg-red-600 transition"
+  />
+ ```html
+ <!-- Show saved value to edit -->
+  <input 
+    type="text" 
+    name="houseName" 
+    value="<%= editing ? home.houseName : '' %>"
+    placeholder="Enter your House Name" 
+    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+    required
+  />
+  <!-- Update other inputs -->
+  ``` 

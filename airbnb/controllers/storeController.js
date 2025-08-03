@@ -5,7 +5,7 @@ exports.getHome = (req, res, next)=>{
     const registeredHouse = Home.fetchAll((registeredHouse) => {
           res.render('store/home-list', {registeredHouse: registeredHouse, pageTitle: "Airbnb Home"});
     });
-}
+};
 
 exports.getBookings = (req, res, next) => {
     res.render('store/bookings', { pageTitle: "Your Bookings" });
@@ -15,7 +15,6 @@ exports.getFavouritesList = (req, res, next) => {
     fav.getFavourites((favourites) =>{
         Home.fetchAll( (registeredHomes) => {
         const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
-        console.log(favouriteHomes);
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
     });
 }) 
