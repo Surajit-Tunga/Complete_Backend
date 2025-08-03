@@ -318,9 +318,29 @@ hostRouter.post("/delete-home/:homeId", postDeleteHome);
 
 exports.postDeleteHome = (req, res, next)=>{
     const homeId = req.params.homeId;
-    Home.deleteById(homeId);
     res.redirect('/host/host-home-list');
 }
 ```
 - Step 2: Make deleteById Model to delete from data:
+
+```js
+ static deleteById(homeId, callback) {
+        this.fetchAll(homes =>{
+            homes = homes.filter(home => home.id !== homeId);
+            fs.writeFile(homeDataPath, JSON.stringify(homes), callback);
+        })
+      }
+```
+```js
+// update controller:
+exports.postDeleteHome = (req, res, next)=>{
+    const homeId = req.params.homeId;
+    Home.deleteById(homeId , error =>{
+        if(error) {
+            console.log(error);
+        }
+     res.redirect('/host/host-home-list');
+    });
+}
+```
 

@@ -38,6 +38,10 @@ exports.postEditHome = (req, res, next)=>{
 
 exports.postDeleteHome = (req, res, next)=>{
     const homeId = req.params.homeId;
-    Home.deleteById(homeId);
-    res.redirect('/host/host-home-list');
+    Home.deleteById(homeId , error =>{
+        if(error) {
+            console.log(error);
+        }
+     res.redirect('/host/host-home-list');
+    });
 }

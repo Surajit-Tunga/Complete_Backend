@@ -15,12 +15,9 @@ module.exports = class Home {
     save() {
         Home.fetchAll((registeredHouse) => {
             if(this.id) { // edit home
-                registeredHouse = registeredHouse.map(home => {
-                    if(home.id === this.id) {
-                        return this; 
-                    }
-                    return home;
-                });
+                registeredHouse = registeredHouse.map(home => 
+                    home.id === this.id ? this : home
+                );
             } else { // add home
                 this.id = Math.random().toString();  
                 registeredHouse.push(this); 
@@ -47,4 +44,13 @@ module.exports = class Home {
             callback(home);
         })
       }
+
+    static deleteById(homeId, callback) {
+        this.fetchAll(homes =>{
+            homes = homes.filter(home => home.id !== homeId);
+            fs.writeFile(homeDataPath, JSON.stringify(homes), callback);
+        })
+      }  
     }
+
+    
