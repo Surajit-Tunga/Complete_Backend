@@ -20,18 +20,16 @@ module.exports = class Home {
                         return this; 
                     }
                     return home;
-
                 });
             } else { // add home
                 this.id = Math.random().toString();  
                 registeredHouse.push(this); 
-            }
-              
+            }              
             fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
             console.log(err)
-        });
-    });      
-}
+         });
+      });      
+   }
 
     static fetchAll(callback) {
         fs.readFile(homeDataPath, (err, data) => {
@@ -48,5 +46,5 @@ module.exports = class Home {
             const home = homes.find(home => home.id === homeId);
             callback(home);
         })
+      }
     }
-}

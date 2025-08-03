@@ -295,8 +295,32 @@ save() {
      });      
  }
  ``` 
-
 ---
 
 ## Delete Home:
-1.29
+- Step 1: Make the  delete button in a from that submits to /host/delete-home/:homeid.
+- **Note:** Why From? Because normal a tag sends get req, but we need post req to make changes in backend so we use from.
+```html
+<form action="/host/delete-home/<%= home.id %>" method="POST" class="flex-1">
+    <button 
+        type="submit" 
+        class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
+    >   Delete
+    </button>
+</form>
+ ```             
+- Step2: Add Routes & controllers:
+```js
+// routes
+hostRouter.post("/delete-home/:homeId", postDeleteHome);
+
+// Controller
+
+exports.postDeleteHome = (req, res, next)=>{
+    const homeId = req.params.homeId;
+    Home.deleteById(homeId);
+    res.redirect('/host/host-home-list');
+}
+```
+- Step 2: Make deleteById Model to delete from data:
+
