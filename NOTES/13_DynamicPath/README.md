@@ -158,4 +158,18 @@ exports.addToFavourites = (req, res, next) => {
     res.redirect('/favourites');
 }
 ```
-50
+- Fetch the data in ui:
+```js 
+// update the controller
+exports.getFavouritesList = (req, res, next) => {
+    fav.getFavourites((favourites) =>{
+        Home.fetchAll( (registeredHouse) => {
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
+        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
+    });
+}) 
+};
+```
+```html
+<!-- update the ui -->
+ 
