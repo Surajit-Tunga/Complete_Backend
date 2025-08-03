@@ -343,4 +343,7 @@ exports.postDeleteHome = (req, res, next)=>{
     });
 }
 ```
+---
 
+## Delete from Fav list 
+- 1.40
