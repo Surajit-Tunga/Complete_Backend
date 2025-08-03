@@ -13,15 +13,25 @@ module.exports = class Home {
     }
 
     save() {
-        this.id = Math.random().toString();
         Home.fetchAll((registeredHouse) => {
-              registeredHouse.push(this);
-              const homeDataPath= path.join(rootDir, 'data', 'home.json');
-              fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
-              console.log(err)
-        })
-        });      
-    }
+            if(this.id) { // edit home
+                registeredHouse = registeredHouse.map(home => {
+                    if(home.id === this.id) {
+                        return this; 
+                    }
+                    return home;
+
+                });
+            } else { // add home
+                this.id = Math.random().toString();  
+                registeredHouse.push(this); 
+            }
+              
+            fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
+            console.log(err)
+        });
+    });      
+}
 
     static fetchAll(callback) {
         fs.readFile(homeDataPath, (err, data) => {

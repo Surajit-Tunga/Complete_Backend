@@ -186,7 +186,7 @@ exports.getFavouritesList = (req, res, next) => {
   Edit Home
 </a>
 ```
-- Step 3: Make Router & Controller
+- Step 3: Make Router & Controller:
 ```js
 // HostRouter
 hostRouter.get("/edit-home/:homeId", getEditHome);
@@ -200,7 +200,7 @@ exports.getEditHome =(req, res, next)=>{
     res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId})
 }
 ```
-- Step 4: Update the controller to fetch the home detials & if not found then  redirect to /host/host-home-list otherwsie passing the data to view
+- Step 4: Update the controller to fetch the home detials & if not found then  redirect to /host/host-home-list otherwsie passing the data to view.
 ```js
 exports.getEditHome =(req, res, next)=>{
     const homeId = req.params.homeId;
@@ -254,4 +254,47 @@ exports.getAddHome =(req, res, next)=>{
   />
   <!-- Update other inputs -->
   ```
-  1.18 
+  - Step 6: add a POST router & Controller for edit-home, which creates a home model object and save it before redirecting to /host/host-home-list. 
+
+```js
+// Router
+hostRouter.post("/edit-home", postEditHome); 
+
+// Controller
+exports.postEditHome = (req, res, next)=>{
+
+    const {id, houseName, price, location, rating} = req.body;
+
+    const home = new Home(houseName,price,location, rating);
+    home.id = id;
+    home.save();
+
+    res.redirect('host/host-home-list', { pageTitle: "Home List"})
+}
+```
+- Step 7: Now update your save() at model to edti the data:
+```js
+save() {
+        Home.fetchAll((registeredHouse) => {
+            if(this.id) { // edit home
+                registeredHouse = registeredHouse.map(home => {
+                    if(home.id === this.id) {
+                        return this; 
+                    }
+                    return home;
+
+                });
+            } else { // add home
+                this.id = Math.random().toString();  
+                registeredHouse.push(this); 
+            }
+              
+            fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
+            console.log(err)
+        });
+     });      
+ }
+ ``` 
+
+---
+
