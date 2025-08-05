@@ -383,3 +383,18 @@ exports.deleteFromFavourites = (req, res, next) => {
 }
 
 ```
+- Step 4: When host deletes delete from the fav list:
+```js
+//in youe home model
+  const fav = require('./fav')
+  ///...............
+    static deleteById(homeId, callback) {
+        this.fetchAll(homes =>{
+            homes = homes.filter(home => home.id !== homeId);
+            fs.writeFile(homeDataPath, JSON.stringify(homes), err =>{
+                fav.deleteById(homeId, callback);
+            });
+        })
+      }
+```   
+---
