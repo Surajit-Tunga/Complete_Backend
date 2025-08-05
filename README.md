@@ -22,3 +22,4 @@
 - [11. Dynamic UI Using EJS ](NOTES/11_DynamicUIUsingEJS/README.md)
 - [12. Model View Controller ](NOTES/12_MVC/README.md)
 - [13. Dynamic Path ](NOTES/13_DynamicPath/README.md)
+- [14. Introduction to SQL](NOTES/14_SQL/README.md)
