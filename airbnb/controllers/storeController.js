@@ -21,13 +21,22 @@ exports.getFavouritesList = (req, res, next) => {
 };
 
 exports.addToFavourites = (req, res, next) => {
-    console.log(req.body);
     fav.addFavourites(req.body.id, (err) => {
         if (err) {
             console.log(err);
         }
     });
     res.redirect('/favourites');
+};
+
+exports.deleteFromFavourites = (req, res, next) => {
+    const homeId = req.params.homeId;
+    fav.deleteById(homeId, err => {
+        if (err) {
+            console.log(err);
+        } 
+        res.redirect('/favourites');
+    })
 }
 
 exports.getHomeDetails = (req, res, next) => {

@@ -21,4 +21,10 @@ module.exports = class fav {
           callback(!err ? JSON.parse(data) : []);
         });
      }
+     static deleteById(delHomeId, callback) {
+        fav.getFavourites(homeIds =>{
+            homeIds = homeIds.filter(homeId => delHomeId !== homeId);
+            fs.writeFile(favDataPath, JSON.stringify(homeIds), callback);
+        })
+      }
     }

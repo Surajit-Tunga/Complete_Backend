@@ -345,5 +345,41 @@ exports.postDeleteHome = (req, res, next)=>{
 ```
 ---
 
-## Delete from Fav list 
-- 1.40
+## Delete from Fav list / Remove from fav
+- Step 1: make a static medthod in fav model to delete home
+```js 
+// in your fav model
+     static deleteById(delHomeId, callback) {
+        fav.getFavourites(homeIds =>{
+            homeIds = homeIds.filter(homeId => delHomeId !== homeId);
+            fs.writeFile(favDataPath, JSON.stringify(homeIds), callback);
+        })
+      }
+```
+- Step 2: add a from to the fav list in each home having path /favourites/delete/:homeid     
+```html
+<!-- In four fav list -->
+    <form action="/Favourites/Delete/<%= home.id %>" method="POST">
+        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Remove from Favourite
+        </button>
+    </form>
+```
+- Step 3: add Routes & Controller:
+```js 
+// In your storeRoutes
+storeRouter.post("/favourites/delete/:homeId", storeController.deleteFromFavourites);
+
+
+// In Your storeController
+exports.deleteFromFavourites = (req, res, next) => {
+    const homeId = req.params.homeId;
+    fav.deleteById(homeId, err => {
+        if (err) {
+            console.log(err);
+        } 
+        res.redirect('/favourites');
+    })
+}
+
+```
