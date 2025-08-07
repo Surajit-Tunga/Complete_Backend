@@ -38,3 +38,54 @@
 ### Sql vs NoSQL
 
 ![](../Note-Img/SQL.png)
+
+### Installation: 
+Go to this link and setup: [Install MySQL for Windows](https://dev.mysql.com/downloads/installer/)
+- Do all the set up and make a schema named airbnb. 
+
+---
+
+#### Next: Connect this to our airbnb project:
+
+- Step 1: Download mysql2
+```bash
+npm install mysql2
+```
+- Step2: In your utils make a folder called databaseUtil.js
+```js 
+const mysql = require('mysql2');
+
+const pool = mysql.createPool(
+    {
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'airbnb'
+    }
+);
+
+module.exports = pool.promise();
+```
+- Step 3: Make SQL table in your database schema.
+
+- Step 4: Querying homes data in App:
+```js 
+// in your app.js
+
+//...test code
+const db = require('./utils/databaseUtils');
+
+db.execute('SELECT * FROM homes').then(([rows, fields]) =>{
+    console.log(rows);
+    console.log(fields);
+})
+.catch(error =>{
+    console.log('Error While Running:', error)
+}) // to test the database is conected or not.
+```
+- So, congrats!! your db is connected successfully.
+
+---
+
+### Adding DB in models
+2.42.19
