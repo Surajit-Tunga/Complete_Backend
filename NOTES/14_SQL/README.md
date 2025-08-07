@@ -35,4 +35,6 @@
 
 ---
 
-### 2.15
+### Sql vs NoSQL
+
+![](../Note-Img/SQL.png)
