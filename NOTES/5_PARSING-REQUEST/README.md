@@ -351,6 +351,6 @@ Create another module to handle incoming requests.
 
 On the "/calculate-result" page, parse the user input, use the addition module to calculate the sum, and display the result on a new HTML page.
 
-- in PS/Cal
+- [Solution](../../PS/cal)
 
 ---

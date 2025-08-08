@@ -2,7 +2,7 @@
 
 ## 1.How DNS Works?
 ![](../Note-Img/DNS.png)
-- **DNS:**Domain Name Service
+- DNS:Domain Name Service
 - User Types a Domain (www.google.com) into the browser.
 - The browser sends a DNS query to resolve the domain into in IP address.
 - **DNS Server:** Provides the correct ip address for the domain.
