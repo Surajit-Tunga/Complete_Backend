@@ -7,7 +7,8 @@ exports.getAddHome =(req, res, next)=>{
 exports.getEditHome =(req, res, next)=>{
     const homeId = req.params.homeId;
     const editing = req.query.editing === 'true';
-    Home.findById(homeId, home=>{
+        Home.findById(homeId).then(([homes]) =>{
+        const home = homes[0];
         if(!home) {
             res.redirect('/host/host-home-list');
         } else {
@@ -22,25 +23,26 @@ exports.getHostHome = (req, res, next)=>{
     });
 }
 exports.postAddHome = (req, res, next)=>{
-    const {houseName,price,location, rating, desc} = req.body;
-    const home = new Home(houseName,price,location, rating, desc);
+    const {houseName,price,location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description);
     home.save();
     res.redirect('/host/host-home-list');
 }
 
 exports.postEditHome = (req, res, next)=>{
-    const {id, houseName, price, location, rating, desc} = req.body;
-    const home = new Home(houseName,price,location, rating, desc, id);
+    const {id, houseName, price, location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description, id);
     home.save();
     res.redirect('/host/host-home-list');
 }
 
 exports.postDeleteHome = (req, res, next)=>{
     const homeId = req.params.homeId;
-    Home.deleteById(homeId , error =>{
-        if(error) {
-            console.log(error);
+    Home.deleteById(homeId).then(
+        ()=> {
+            res.redirect('/host/host-home-list');
         }
-     res.redirect('/host/host-home-list');
-    });
+    ).catch(error => {
+        console.log(error)
+    })   
 }

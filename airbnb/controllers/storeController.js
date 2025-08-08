@@ -21,7 +21,8 @@ exports.getFavouritesList = (req, res, next) => {
 };
 
 exports.addToFavourites = (req, res, next) => {
-    fav.addFavourites(req.body.id, (err) => {
+    fav.addFavourites(req.body.id, (err) => 
+        {
         if (err) {
             console.log(err);
         }
@@ -41,7 +42,8 @@ exports.deleteFromFavourites = (req, res, next) => {
 
 exports.getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
-    Home.findById(homeId, home=>{
+    Home.findById(homeId).then(([homes]) =>{
+        const home = homes[0];
         if(!home) {
             res.redirect('/');
         } else {

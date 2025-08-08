@@ -118,3 +118,158 @@ exports.getHome = (req, res, next)=>{
 ```
 Step 2: Do the same for all other file operation & Update the controllers
 
+- Updated home.js model:
+```js
+
+const db = require('../utils/databaseUtils');
+
+module.exports = class Home {
+    constructor(houseName, price, location, rating, description, id){
+        this.houseName = houseName;
+        this.price =price;
+        this.location = location;
+        this.rating = rating;
+        this.description =description;
+        this.id =id;
+    }
+
+    save() {
+      if (this.id) { // for update
+          return db.execute(
+          'UPDATE homes SET houseName=?, location=?, price=?, rating=?, description=? WHERE id=?',
+          [this.houseName, this.location, this.price, this.rating, this.description, this.id]
+       );
+
+      } else { // add new
+          return db.execute(
+          'INSERT INTO homes (houseName, location, price, rating, description) VALUES (?, ?, ?, ?, ?)',
+          [this.houseName, this.location, this.price, this.rating, this.description]
+       );
+     }
+   }
+
+    static fetchAll() {
+       return db.execute('SELECT * FROM homes');    
+    } 
+
+    static findById(homeId) {
+      return db.execute('SELECT * FROM homes WHERE id=?', [homeId]); 
+
+      }
+
+    static deleteById(homeId) {
+      return db.execute('DELETE FROM homes WHERE id=?', [homeId]); 
+      }  
+    }
+```
+- Updated storeController:
+```js
+const fav = require("../models/fav");
+const Home = require("../models/home");
+
+exports.getHome = (req, res, next)=>{
+        Home.fetchAll().then(([registeredHomes]) => {
+            res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home"});
+     })
+};
+
+exports.getBookings = (req, res, next) => {
+    res.render('store/bookings', { pageTitle: "Your Bookings" });
+};
+
+exports.getFavouritesList = (req, res, next) => {
+    fav.getFavourites((favourites) =>{
+        Home.fetchAll().then(([registeredHomes]) => {
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
+        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
+    });
+  }) 
+};
+
+exports.addToFavourites = (req, res, next) => {
+    fav.addFavourites(req.body.id, (err) => 
+        {
+        if (err) {
+            console.log(err);
+        }
+    });
+    res.redirect('/favourites');
+};
+
+exports.deleteFromFavourites = (req, res, next) => {
+    const homeId = req.params.homeId;
+    fav.deleteById(homeId, err => {
+        if (err) {
+            console.log(err);
+        } 
+        res.redirect('/favourites');
+    })
+}
+
+exports.getHomeDetails = (req, res, next) => {
+    const homeId = req.params.homeId;
+    Home.findById(homeId).then(([homes]) =>{
+        const home = homes[0];
+        if(!home) {
+            res.redirect('/');
+        } else {
+            res.render('store/home-detail', { pageTitle: "Home Details", home: home });
+        }
+        
+    });
+};
+```
+- Updated hostController:
+```js
+const Home = require("../models/home");
+
+exports.getAddHome =(req, res, next)=>{
+    res.render('host/edit-home',{ pageTitle: "Add Home", editing: false})
+}
+
+exports.getEditHome =(req, res, next)=>{
+    const homeId = req.params.homeId;
+    const editing = req.query.editing === 'true';
+        Home.findById(homeId).then(([homes]) =>{
+        const home = homes[0];
+        if(!home) {
+            res.redirect('/host/host-home-list');
+        } else {
+            res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId, home: home});
+        }
+    })    
+}
+
+exports.getHostHome = (req, res, next)=>{
+      Home.fetchAll().then(([registeredHomes]) => {
+          res.render('host/host-home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Host"});
+    });
+}
+exports.postAddHome = (req, res, next)=>{
+    const {houseName,price,location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description);
+    home.save();
+    res.redirect('/host/host-home-list');
+}
+
+exports.postEditHome = (req, res, next)=>{
+    const {id, houseName, price, location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description, id);
+    home.save();
+    res.redirect('/host/host-home-list');
+}
+
+exports.postDeleteHome = (req, res, next)=>{
+    const homeId = req.params.homeId;
+    Home.deleteById(homeId).then(
+        ()=> {
+            res.redirect('/host/host-home-list');
+        }
+    ).catch(error => {
+        console.log(error)
+    })   
+}
+
+```
+- Fav Sec is not implemented here.
+
