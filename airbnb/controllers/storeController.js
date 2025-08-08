@@ -17,7 +17,7 @@ exports.getFavouritesList = (req, res, next) => {
         const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
     });
-}) 
+  }) 
 };
 
 exports.addToFavourites = (req, res, next) => {

@@ -116,5 +116,5 @@ exports.getHome = (req, res, next)=>{
 
 // do same for other where fetchall() is used.
 ```
-    
+Step 2: Do the same for all other file operation & Update the controllers
 

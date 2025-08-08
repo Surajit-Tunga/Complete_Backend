@@ -22,16 +22,15 @@ exports.getHostHome = (req, res, next)=>{
     });
 }
 exports.postAddHome = (req, res, next)=>{
-    const {houseName,price,location, rating} = req.body;
-    const home = new Home(houseName,price,location, rating);
+    const {houseName,price,location, rating, desc} = req.body;
+    const home = new Home(houseName,price,location, rating, desc);
     home.save();
     res.redirect('/host/host-home-list');
 }
 
 exports.postEditHome = (req, res, next)=>{
-    const {id, houseName, price, location, rating} = req.body;
-    const home = new Home(houseName,price,location, rating);
-    home.id = id;
+    const {id, houseName, price, location, rating, desc} = req.body;
+    const home = new Home(houseName,price,location, rating, desc, id);
     home.save();
     res.redirect('/host/host-home-list');
 }

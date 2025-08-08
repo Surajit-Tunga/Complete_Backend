@@ -1,11 +1,13 @@
 const db = require('../utils/databaseUtils');
 
 module.exports = class Home {
-    constructor(houseName, price, location, rating){
+    constructor(houseName, price, location, rating, desc, id){
         this.houseName = houseName;
         this.price =price;
         this.location = location;
         this.rating = rating;
+        this.desc =desc;
+        this.id =id;
     }
 
     save() {
