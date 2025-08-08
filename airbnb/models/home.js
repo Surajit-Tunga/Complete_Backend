@@ -1,9 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-const rootDir = require('../utils/pathUtils')
-const fav = require('./fav')
-
-const homeDataPath= path.join(rootDir, 'data', 'home.json');
+const db = require('../utils/databaseUtils');
 
 module.exports = class Home {
     constructor(houseName, price, location, rating){
@@ -14,45 +9,19 @@ module.exports = class Home {
     }
 
     save() {
-        Home.fetchAll((registeredHouse) => {
-            if(this.id) { // edit home
-                registeredHouse = registeredHouse.map(home => 
-                    home.id === this.id ? this : home
-                );
-            } else { // add home
-                this.id = Math.random().toString();  
-                registeredHouse.push(this); 
-            }              
-            fs.writeFile(homeDataPath, JSON.stringify(registeredHouse), (err)=>{
-            console.log(err)
-         });
-      });      
+            
    }
 
-    static fetchAll(callback) {
-        fs.readFile(homeDataPath, (err, data) => {
-            if (!err) {
-              callback(JSON.parse(data));
-            } else {
-            callback([]);
-            }
-        });
+    static fetchAll() {
+       return db.execute('SELECT * FROM homes');    
     } 
 
     static findById(homeId, callback) {
-        this.fetchAll(homes =>{
-            const home = homes.find(home => home.id === homeId);
-            callback(home);
-        })
+
       }
 
     static deleteById(homeId, callback) {
-        this.fetchAll(homes =>{
-            homes = homes.filter(home => home.id !== homeId);
-            fs.writeFile(homeDataPath, JSON.stringify(homes), err =>{
-                fav.deleteById(homeId, callback);
-            });
-        })
+        
       }  
     }
 

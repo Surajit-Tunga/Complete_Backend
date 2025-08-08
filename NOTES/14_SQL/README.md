@@ -84,8 +84,37 @@ db.execute('SELECT * FROM homes').then(([rows, fields]) =>{
 }) // to test the database is conected or not.
 ```
 - So, congrats!! your db is connected successfully.
+- Then remove the test code & Continue.
 
 ---
 
 ### Adding DB in models
-2.42.19
+- Step 1: Remove all the file operations from models & Update controllers.
+```js
+// home.js
+const db = require('../utils/databaseUtils');
+
+module.exports = class Home {
+    constructor(houseName, price, location, rating){
+        this.houseName = houseName;
+        this.price =price;
+        this.location = location;
+        this.rating = rating;
+    }
+    static fetchAll() {
+       return db.execute('SELECT * FROM homes');    
+    }  
+}
+```
+```js
+// Store controller
+exports.getHome = (req, res, next)=>{
+        Home.fetchAll().then(([registeredHomes]) => {
+            res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home"});
+     })
+}; // update the fetchall()
+
+// do same for other where fetchall() is used.
+```
+    
+
