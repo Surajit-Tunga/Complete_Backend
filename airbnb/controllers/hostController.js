@@ -25,7 +25,9 @@ exports.getHostHome = (req, res, next)=>{
 exports.postAddHome = (req, res, next)=>{
     const {houseName,price,location, rating, description} = req.body;
     const home = new Home(houseName,price,location, rating, description);
-    home.save();
+    home.save().then(()=>{
+        console.log('Home saved.');
+    });
     res.redirect('/host/host-home-list');
 }
 

@@ -29,12 +29,12 @@
 - Create a free cluster in mongodb.
 - Then connect with the database.
 
-### CConnecting with MongoDB Driver:
-- Install mongodb in your projects.
+### Connecting with MongoDB Driver:
+- **Step1:** Install mongodb in your projects.
 ```bash
 npm install mongodb
 ```
--  Add your connection string into your application code:
+- **step2:**  Add your connection string into your application code:
 ```js
 // in your databse utils
 
@@ -42,29 +42,40 @@ const mongodb = require('mongodb');
 
 const MongoClient = mongodb.MongoClient;
 
-const url = "...........";
+const url = "mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+let _db;
 
 const mongoConnect = (Callback)=>{
    MongoClient.connect(url).then(client => {
-      Callback(client);
+      Callback();
+      _db= client.db('airbnb');
    }).catch(error=>{
         console.log(error);
    });
 }
 
-module.exports = mongoConnect;
+const getDB = ()=>{
+    if(!_db){
+        throw new Error('Mongo not found');
+    }
+    return _db;
+}
+
+exports.mongoConnect = mongoConnect;
+exports.getDB = getDB;
 ```
 ```js
 // to use this import mongoConnect in App.js
-const mongoConnect = require('./utils/databaseUtils');
+const {mongoConnect} = require('./utils/databaseUtils');
 //----------
 const PORT = 3000;
-mongoConnect( client =>{
-    console.log(client);
+mongoConnect( () =>{
     app.listen(PORT,()=>{
     console.log(`the server is running at http://localhost:${PORT}`)
   });
 })
 ```
-
+- **step3:** Update models with mongodb
+3.58
 
