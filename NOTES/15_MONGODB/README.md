@@ -25,6 +25,46 @@
 
 ---
 
-## Installation
+## Connections:
+- Create a free cluster in mongodb.
+- Then connect with the database.
 
-- Download mongobd
+### CConnecting with MongoDB Driver:
+- Install mongodb in your projects.
+```bash
+npm install mongodb
+```
+-  Add your connection string into your application code:
+```js
+// in your databse utils
+
+const mongodb = require('mongodb');
+
+const MongoClient = mongodb.MongoClient;
+
+const url = "...........";
+
+const mongoConnect = (Callback)=>{
+   MongoClient.connect(url).then(client => {
+      Callback(client);
+   }).catch(error=>{
+        console.log(error);
+   });
+}
+
+module.exports = mongoConnect;
+```
+```js
+// to use this import mongoConnect in App.js
+const mongoConnect = require('./utils/databaseUtils');
+//----------
+const PORT = 3000;
+mongoConnect( client =>{
+    console.log(client);
+    app.listen(PORT,()=>{
+    console.log(`the server is running at http://localhost:${PORT}`)
+  });
+})
+```
+
+
