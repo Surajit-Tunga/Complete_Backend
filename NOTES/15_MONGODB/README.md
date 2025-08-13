@@ -42,7 +42,7 @@ const mongodb = require('mongodb');
 
 const MongoClient = mongodb.MongoClient;
 
-const url = "mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const url = "....";
 
 let _db;
 
