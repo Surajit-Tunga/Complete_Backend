@@ -234,5 +234,34 @@ exports.getHomeDetails = (req, res, next) => {
 ```
 - **note** Replace home.id with home._id for mongoDB.
 
+- For edit option update the save():
+```js 
+    save() {
+      const db = getDB();
+      if (this._id) { //update
+        const updateFields ={
+          houseName: this.houseName ,
+          price: this.price , 
+          location: this.location, 
+          rating: this.rating, 
+          description: this.description
+        }
+        return db.collection('homes').updateOne({_id: new ObjectId(String(this._id))}, {$set: updateFields});
+      } else { //insert
+        return db.collection('homes').insertOne(this);
+      }
+    }
+```
+```js
+exports.postEditHome = (req, res, next)=>{
+    const {id, houseName, price, location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description, id);
+    home.save().then(result =>{
+        console.log('Home Updated', result);
+    });
+    res.redirect('/host/host-home-list');
+}
+```
+
 ---
 
