@@ -10,7 +10,9 @@ module.exports = class fav {
         if(!exsistingFav) {
           return db.collection('fav').insertOne(this);
         }
-         return new Promise.resolve();      })
+         return new Promise.resolve();
+        
+    })
       
     }
      static getFavourites(){
