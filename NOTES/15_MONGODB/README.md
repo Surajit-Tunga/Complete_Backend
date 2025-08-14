@@ -83,6 +83,156 @@ mongoConnect( () =>{
 - In your vs code extention download mongodb of vs code extention & In **Access your data tools** sec select MongoDB for  vs code & Follow the steps to setup.
 - Here you can see your data & many other things you can explore.
 
-- **step3:** Update models with mongodb
-4.6
+---
+
+## Update models with mongodb & fix controllers
+```js 
+const { ObjectId } = require('mongodb');
+const {getDB} = require('../utils/databaseUtils');
+
+module.exports = class Home {
+    constructor(houseName, price, location, rating, description, _id){
+        this.houseName = houseName;
+        this.price =price;
+        this.location = location;
+        this.rating = rating;
+        this.description =description;
+        if (_id){
+        this._id =_id;
+        }
+    }
+
+    save() {
+      const db = getDB();
+      return db.collection('homes').insertOne(this);
+    }
+
+    static fetchAll() {
+      const db = getDB();
+      return db.collection('homes').find().toArray();
+    } 
+
+    static findById(homeId) {
+      const db = getDB();
+      return db.collection('homes').find({_id: new ObjectId(String(homeId))}).next();
+    }
+
+    static deleteById(homeId) {
+      const db = getDB();
+      return db.collection('homes').deleteOne({_id: new ObjectId(String(homeId))});      
+    }  
+}
+```
+```js
+//HostController
+const Home = require("../models/home");
+
+exports.getAddHome =(req, res, next)=>{
+    res.render('host/edit-home',{ pageTitle: "Add Home", editing: false})
+}
+
+exports.getEditHome =(req, res, next)=>{
+    const homeId = req.params.homeId;
+    const editing = req.query.editing === 'true';
+        Home.findById(homeId).then(home =>{
+        if(!home) {
+            res.redirect('/host/host-home-list');
+        } else {
+            res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId, home: home});
+        }
+    })    
+}
+
+exports.getHostHome = (req, res, next)=>{
+      Home.fetchAll().then(registeredHomes => {
+          res.render('host/host-home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Host"});
+    });
+}
+exports.postAddHome = (req, res, next)=>{
+    const {houseName,price,location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description);
+    home.save().then(()=>{
+        console.log('Home saved.');
+    });
+    res.redirect('/host/host-home-list');
+}
+
+exports.postEditHome = (req, res, next)=>{
+    const {id, houseName, price, location, rating, description} = req.body;
+    const home = new Home(houseName,price,location, rating, description, id);
+    home.save();
+    res.redirect('/host/host-home-list');
+}
+
+exports.postDeleteHome = (req, res, next)=>{
+    const homeId = req.params.homeId;
+    Home.deleteById(homeId).then(
+        ()=> {
+            res.redirect('/host/host-home-list');
+        }
+    ).catch(error => {
+        console.log(error)
+    })   
+}
+```
+
+```js
+//storeController
+const fav = require("../models/fav");
+const Home = require("../models/home");
+
+exports.getHome = (req, res, next)=>{
+        Home.fetchAll().then(registeredHomes => {
+            res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home"});
+     })
+};
+
+exports.getBookings = (req, res, next) => {
+    res.render('store/bookings', { pageTitle: "Your Bookings" });
+};
+
+exports.getFavouritesList = (req, res, next) => {
+    fav.getFavourites((favourites) =>{
+        Home.fetchAll().then(registeredHomes => {
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id));
+        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
+    });
+  }) 
+};
+
+exports.addToFavourites = (req, res, next) => {
+    fav.addFavourites(req.body.id, (err) => 
+        {
+        if (err) {
+            console.log(err);
+        }
+    });
+    res.redirect('/favourites');
+};
+
+exports.deleteFromFavourites = (req, res, next) => {
+    const homeId = req.params.homeId;
+    fav.deleteById(homeId, err => {
+        if (err) {
+            console.log(err);
+        } 
+        res.redirect('/favourites');
+    })
+}
+
+exports.getHomeDetails = (req, res, next) => {
+    const homeId = req.params.homeId;
+    Home.findById(homeId).then(home =>{
+        if(!home) {
+            res.redirect('/');
+        } else {
+            res.render('store/home-detail', { pageTitle: "Home Details", home: home });
+        }
+        
+    });
+};
+```
+- **note** Replace home.id with home._id for mongoDB.
+
+---
 

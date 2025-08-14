@@ -180,7 +180,7 @@ exports.getBookings = (req, res, next) => {
 exports.getFavouritesList = (req, res, next) => {
     fav.getFavourites((favourites) =>{
         Home.fetchAll().then(([registeredHomes]) => {
-        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id));
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
     });
   }) 

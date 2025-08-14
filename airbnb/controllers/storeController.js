@@ -2,7 +2,7 @@ const fav = require("../models/fav");
 const Home = require("../models/home");
 
 exports.getHome = (req, res, next)=>{
-        Home.fetchAll().then(([registeredHomes]) => {
+        Home.fetchAll().then(registeredHomes => {
             res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home"});
      })
 };
@@ -13,8 +13,8 @@ exports.getBookings = (req, res, next) => {
 
 exports.getFavouritesList = (req, res, next) => {
     fav.getFavourites((favourites) =>{
-        Home.fetchAll().then(([registeredHomes]) => {
-        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
+        Home.fetchAll().then(registeredHomes => {
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id));
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
     });
   }) 
@@ -42,8 +42,7 @@ exports.deleteFromFavourites = (req, res, next) => {
 
 exports.getHomeDetails = (req, res, next) => {
     const homeId = req.params.homeId;
-    Home.findById(homeId).then(([homes]) =>{
-        const home = homes[0];
+    Home.findById(homeId).then(home =>{
         if(!home) {
             res.redirect('/');
         } else {

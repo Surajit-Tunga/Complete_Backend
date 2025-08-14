@@ -7,8 +7,7 @@ exports.getAddHome =(req, res, next)=>{
 exports.getEditHome =(req, res, next)=>{
     const homeId = req.params.homeId;
     const editing = req.query.editing === 'true';
-        Home.findById(homeId).then(([homes]) =>{
-        const home = homes[0];
+        Home.findById(homeId).then(home =>{
         if(!home) {
             res.redirect('/host/host-home-list');
         } else {
@@ -18,7 +17,7 @@ exports.getEditHome =(req, res, next)=>{
 }
 
 exports.getHostHome = (req, res, next)=>{
-      Home.fetchAll().then(([registeredHomes]) => {
+      Home.fetchAll().then(registeredHomes => {
           res.render('host/host-home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Host"});
     });
 }
