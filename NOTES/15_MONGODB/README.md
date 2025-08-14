@@ -42,7 +42,7 @@ const mongodb = require('mongodb');
 
 const MongoClient = mongodb.MongoClient;
 
-const url = "....";
+const url = "...."; // give the connection url
 
 let _db;
 
@@ -76,6 +76,13 @@ mongoConnect( () =>{
   });
 })
 ```
+### Connectting with Mongo Compass & MongoDB for VS Code:
+- Download mongodb compass in your pc.
+- Go to your Cluster click on connect.
+- In **Access your data tools** sec select compass & Follow the steps to setup.
+- In your vs code extention download mongodb of vs code extention & In **Access your data tools** sec select MongoDB for  vs code & Follow the steps to setup.
+- Here you can see your data & many other things you can explore.
+
 - **step3:** Update models with mongodb
-3.58
+4.6
 
