@@ -265,3 +265,70 @@ exports.postEditHome = (req, res, next)=>{
 
 ---
 
+### Add to Fev & Delete:
+- Fav Model:
+```js
+const {getDB} = require('../utils/databaseUtils');
+
+module.exports = class fav {
+    constructor(houseId){
+        this.houseId = houseId;
+    }
+    save(){
+      const db = getDB();
+      return db.collection('fav').findOne({houseId: this.houseId}).then(exsistingFav =>{
+        if(!exsistingFav) {
+          return db.collection('fav').insertOne(this);
+        }
+         return new Promise.resolve();
+        
+    })
+      
+    }
+     static getFavourites(){
+      const db = getDB();
+      return db.collection('fav').find().toArray();
+    }
+     static deleteById(delHomeId) {
+        const db = getDB();
+        return db.collection('fav').deleteOne({houseId: delHomeId});
+    }
+}
+```
+- Update controllers:
+```js
+//---
+exports.getFavouritesList = (req, res, next) => {
+    fav.getFavourites().then(favourites =>{
+        favourites = favourites.map(fav => fav.houseId)
+        Home.fetchAll().then(registeredHomes => {
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id.toString()));
+        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
+    });
+  }) 
+};
+
+exports.addToFavourites = (req, res, next) => {
+    const homeId = req.body.id;
+    const favourite = new fav(homeId);
+    favourite.save().then(result => {
+        console.log('added to fav');
+    }).catch(err => {
+        console.log(err);
+    }).finally(()=>{
+        res.redirect('/favourites');
+    });    
+};
+
+exports.deleteFromFavourites = (req, res, next) => {
+    const homeId = req.params.homeId;
+    fav.deleteById(homeId).then(result => {
+        console.log('added to fav');
+    }).catch(err => {
+        console.log(err);
+    }).finally(()=>{
+        res.redirect('/favourites');
+    }); 
+}
+```
+---

@@ -12,32 +12,36 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavouritesList = (req, res, next) => {
-    fav.getFavourites((favourites) =>{
+    fav.getFavourites().then(favourites =>{
+        favourites = favourites.map(fav => fav.houseId)
         Home.fetchAll().then(registeredHomes => {
-        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id));
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id.toString()));
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
     });
   }) 
 };
 
 exports.addToFavourites = (req, res, next) => {
-    fav.addFavourites(req.body.id, (err) => 
-        {
-        if (err) {
-            console.log(err);
-        }
-    });
-    res.redirect('/favourites');
+    const homeId = req.body.id;
+    const favourite = new fav(homeId);
+    favourite.save().then(result => {
+        console.log('added to fav');
+    }).catch(err => {
+        console.log(err);
+    }).finally(()=>{
+        res.redirect('/favourites');
+    });    
 };
 
 exports.deleteFromFavourites = (req, res, next) => {
     const homeId = req.params.homeId;
-    fav.deleteById(homeId, err => {
-        if (err) {
-            console.log(err);
-        } 
+    fav.deleteById(homeId).then(result => {
+        console.log('added to fav');
+    }).catch(err => {
+        console.log(err);
+    }).finally(()=>{
         res.redirect('/favourites');
-    })
+    }); 
 }
 
 exports.getHomeDetails = (req, res, next) => {
