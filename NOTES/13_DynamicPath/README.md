@@ -14,7 +14,7 @@
 - Add Dynamic URL to the details button:
 ```html
 <a 
-href="/homes/<%= home._id %>"
+href="/homes/<%= home.id %>"
 class="flex-1 text-center bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium py-1.5 px-3 rounded-md transition duration-300"
 >
   Details
@@ -46,7 +46,7 @@ storeRouter.get("/homes/:homeId", storeController.getHomeDetails);
 // in your models after fetchAll()
  static findById(homeId, callback) {
         this.fetchAll(homes =>{
-            const home = homes.find(home => home._id === homeId);
+            const home = homes.find(home => home.id === homeId);
             callback(home);
         })
     } 
@@ -97,7 +97,7 @@ exports.getHomeDetails = (req, res, next) => {
 ```html
 <form action="/favourites">
     <button type="submit" class="bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold py-1.5 px-1 rounded-lg transition duration-300">Add to favourites </button>
-    <input type="text" name="id" value="<%= home._id %>"  hidden>
+    <input type="text" name="id" value="<%= home.id %>"  hidden>
 </form>
 ```
 ```html
@@ -164,7 +164,7 @@ exports.addToFavourites = (req, res, next) => {
 exports.getFavouritesList = (req, res, next) => {
     fav.getFavourites((favourites) =>{
         Home.fetchAll( (registeredHouse) => {
-        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id));
+        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home.id));
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
     });
 }) 
@@ -180,7 +180,7 @@ exports.getFavouritesList = (req, res, next) => {
 - Step 2: Now make url for the editing page:
 ```html
 <a 
-  href="/host/edit-home/<%= home._id %>?editing=true" 
+  href="/host/edit-home/<%= home.id %>?editing=true" 
   class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
 >
   Edit Home
@@ -266,7 +266,7 @@ exports.postEditHome = (req, res, next)=>{
     const {id, houseName, price, location, rating} = req.body;
 
     const home = new Home(houseName,price,location, rating);
-    home._id = id;
+    home.id = id;
     home.save();
 
     res.redirect('host/host-home-list', { pageTitle: "Home List"})
@@ -278,7 +278,7 @@ save() {
         Home.fetchAll((registeredHouse) => {
             if(this.id) { // edit home
                 registeredHouse = registeredHouse.map(home => {
-                    if(home._id === this.id) {
+                    if(home.id === this.id) {
                         return this; 
                     }
                     return home;
@@ -301,7 +301,7 @@ save() {
 - Step 1: Make the  delete button in a from that submits to /host/delete-home/:homeid.
 - **Note:** Why From? Because normal a tag sends get req, but we need post req to make changes in backend so we use from.
 ```html
-<form action="/host/delete-home/<%= home._id %>" method="POST" class="flex-1">
+<form action="/host/delete-home/<%= home.id %>" method="POST" class="flex-1">
     <button 
         type="submit" 
         class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300"
@@ -326,7 +326,7 @@ exports.postDeleteHome = (req, res, next)=>{
 ```js
  static deleteById(homeId, callback) {
         this.fetchAll(homes =>{
-            homes = homes.filter(home => home._id !== homeId);
+            homes = homes.filter(home => home.id !== homeId);
             fs.writeFile(homeDataPath, JSON.stringify(homes), callback);
         })
       }
@@ -359,7 +359,7 @@ exports.postDeleteHome = (req, res, next)=>{
 - Step 2: add a from to the fav list in each home having path /favourites/delete/:homeid     
 ```html
 <!-- In four fav list -->
-    <form action="/Favourites/Delete/<%= home._id %>" method="POST">
+    <form action="/Favourites/Delete/<%= home.id %>" method="POST">
         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                 Remove from Favourite
         </button>
@@ -390,7 +390,7 @@ exports.deleteFromFavourites = (req, res, next) => {
   ///...............
     static deleteById(homeId, callback) {
         this.fetchAll(homes =>{
-            homes = homes.filter(home => home._id !== homeId);
+            homes = homes.filter(home => home.id !== homeId);
             fs.writeFile(homeDataPath, JSON.stringify(homes), err =>{
                 fav.deleteById(homeId, callback);
             });
