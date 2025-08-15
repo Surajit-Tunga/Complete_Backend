@@ -1,4 +1,4 @@
-const {getDB} = require('../utils/databaseUtils');
+
 
 module.exports = class fav {
     constructor(houseId){
@@ -10,7 +10,7 @@ module.exports = class fav {
         if(!exsistingFav) {
           return db.collection('fav').insertOne(this);
         }
-         return new Promise.resolve();
+         return Promise.resolve();
         
     })
       

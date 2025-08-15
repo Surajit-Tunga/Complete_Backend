@@ -9,7 +9,7 @@ const storeRouter =require('./routes/storeRouter');
 const {hostRouter} = require('./routes/hostRouter');
 const rootDir = require("./utils/pathUtils");
 const { notFound } = require('./controllers/error');
-const {mongoConnect} = require('./utils/databaseUtils');
+const { default: mongoose } = require('mongoose');
 
 
 const app = express();
@@ -28,8 +28,11 @@ app.use("/host",hostRouter);
 app.use(notFound);
 
 const PORT = 3000;
-mongoConnect(() =>{
+const DB_PATH ="mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+mongoose.connect(DB_PATH).then(()=>{  
     app.listen(PORT,()=>{
     console.log(`the server is running at http://localhost:${PORT}`)
   });
+}).catch(err=>{
+  console.log(err);
 })

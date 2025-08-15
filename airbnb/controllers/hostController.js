@@ -17,13 +17,13 @@ exports.getEditHome =(req, res, next)=>{
 }
 
 exports.getHostHome = (req, res, next)=>{
-      Home.fetchAll().then(registeredHomes => {
+      Home.find().then(registeredHomes => {
           res.render('host/host-home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Host"});
     });
 }
 exports.postAddHome = (req, res, next)=>{
     const {houseName,price,location, rating, description} = req.body;
-    const home = new Home(houseName,price,location, rating, description);
+    const home = new Home({houseName,price,location, rating, description});
     home.save().then(()=>{
         console.log('Home saved.');
     });
@@ -48,4 +48,4 @@ exports.postDeleteHome = (req, res, next)=>{
     ).catch(error => {
         console.log(error)
     })   
-}
+} 
