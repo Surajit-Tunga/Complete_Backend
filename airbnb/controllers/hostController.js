@@ -32,16 +32,26 @@ exports.postAddHome = (req, res, next)=>{
 
 exports.postEditHome = (req, res, next)=>{
     const {id, houseName, price, location, rating, description} = req.body;
-    const home = new Home(houseName,price,location, rating, description, id);
-    home.save().then(result =>{
+    Home.findById(id).then((home)=>{
+        home.houseName = houseName;
+        home.price = price;
+        home.location = location;
+        home.rating = rating;
+        home.description = description;
+        home.save().then(result =>{
         console.log('Home Updated', result);
-    });
-    res.redirect('/host/host-home-list');
+    }).catch(err=>{
+        console.log(err);
+    })
+    res.redirect('/host/host-home-list');   
+  }).catch(err=>{
+        console.log(err);
+    })    
 }
 
 exports.postDeleteHome = (req, res, next)=>{
     const homeId = req.params.homeId;
-    Home.deleteById(homeId).then(
+    Home.findByIdAndDelete(homeId).then(
         ()=> {
             res.redirect('/host/host-home-list');
         }

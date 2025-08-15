@@ -1,26 +1,12 @@
+const mongoose = require('mongoose');
 
+const favSchema = mongoose.Schema({
+ houseId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Home',
+  required: true,
+  unique: true
+ }
+});
 
-module.exports = class fav {
-    constructor(houseId){
-        this.houseId = houseId;
-    }
-    save(){
-      const db = getDB();
-      return db.collection('fav').findOne({houseId: this.houseId}).then(exsistingFav =>{
-        if(!exsistingFav) {
-          return db.collection('fav').insertOne(this);
-        }
-         return Promise.resolve();
-        
-    })
-      
-    }
-     static getFavourites(){
-      const db = getDB();
-      return db.collection('fav').find().toArray();
-    }
-     static deleteById(delHomeId) {
-        const db = getDB();
-        return db.collection('fav').deleteOne({houseId: delHomeId});
-    }
-}
+module.exports = mongoose.model('Fav', favSchema);
