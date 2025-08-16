@@ -42,7 +42,7 @@
 </html>
 ```
 
-2. Create Auth Router to handle login routes , controllers & Register the new router in app.js
+2. Create Auth Router , controllers to handle login  & Register the new router in app.js.& Assume the person is logged in and redirect to home page.
 
 ```js
 //make authRouter.js
@@ -52,6 +52,7 @@ const authRouter = express.Router();
 const { getLogin} = require('../controllers/authController');
 
 authRouter.get("/login", getLogin);
+authRouter.post("/login", postLogin);
 
 exports.authRouter = authRouter;
 ```
@@ -61,6 +62,9 @@ exports.authRouter = authRouter;
 exports.getLogin = (req, res, next) => {
     res.render('auth/login', { pageTitle: "login" });
 };
+exports.postLogin = (req, res, next) => {
+    res.redirect('/');
+};
 ```
 ```js
 // regiser this router in app.js
@@ -69,5 +73,6 @@ app.use("/host",hostRouter);
 app.use(authRouter);
 app.use(notFound);
 ```
+---
 
-
+## Checking Login State 6.27
