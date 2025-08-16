@@ -10,6 +10,7 @@ const {hostRouter} = require('./routes/hostRouter');
 const rootDir = require("./utils/pathUtils");
 const { notFound } = require('./controllers/error');
 const { default: mongoose } = require('mongoose');
+const { authRouter } = require('./routes/authRouter');
 
 
 const app = express();
@@ -25,7 +26,9 @@ app.use(express.static(path.join(rootDir, 'public')));
 
 app.use(storeRouter);
 app.use("/host",hostRouter);
+app.use(authRouter);
 app.use(notFound);
+
 
 const PORT = 3000;
 const DB_PATH ="mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
