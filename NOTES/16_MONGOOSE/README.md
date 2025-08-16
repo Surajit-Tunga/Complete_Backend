@@ -204,3 +204,29 @@ exports.getHomeDetails = (req, res, next) => {
 ```
 - **Note:**
 - save(), find(),.... this are the built in function of mongoose
+
+## Deletee from fav list when host delete home:
+```js 
+// in your home model
+const fav = require('./fav');
+
+//----
+homeSchema.pre('findOneAndDelete', async function(next){
+  const homeId = this.getQuery()["_id"];
+  await fav.deleteMany({homeId: homeId});
+  next();
+});
+```
+---
+
+## Fetching Relations:
+- Currently our getfavlist is filtering all the homes for one id for learg db its not good.
+
+```js
+exports.getFavouritesList = (req, res, next) => {
+    fav.find().populate("houseId").then((favourites) =>{
+        const favouriteHomes = favourites.map((favourite)=> favourite.houseId);
+        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
+  }); 
+};
+```

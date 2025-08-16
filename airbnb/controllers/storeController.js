@@ -12,13 +12,10 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavouritesList = (req, res, next) => {
-    fav.find().then(favourites =>{
-        favourites = favourites.map(fav => fav.houseId.toString())
-        Home.find().then(registeredHomes => {
-        const favouriteHomes = registeredHomes.filter(home => favourites.includes(home._id.toString()));
+    fav.find().populate("houseId").then((favourites) =>{
+        const favouriteHomes = favourites.map((fav)=> fav.houseId);
         res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
-    });
-  }) 
+  }); 
 };
 
 exports.addToFavourites = (req, res, next) => {
