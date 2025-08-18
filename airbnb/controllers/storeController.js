@@ -3,18 +3,18 @@ const Home = require("../models/home");
 
 exports.getHome = (req, res, next)=>{
         Home.find().then(registeredHomes => {
-            res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home"});
+            res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home",isLoggedIn: req.isLoggedIn});
      })
 };
 
 exports.getBookings = (req, res, next) => {
-    res.render('store/bookings', { pageTitle: "Your Bookings" });
+    res.render('store/bookings', { pageTitle: "Your Bookings",isLoggedIn: req.isLoggedIn });
 };
 
 exports.getFavouritesList = (req, res, next) => {
     fav.find().populate("houseId").then((favourites) =>{
         const favouriteHomes = favourites.map((fav)=> fav.houseId);
-        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, });
+        res.render('store/fav-list', { pageTitle: "Your Favourites", favouriteHomes: favouriteHomes, isLoggedIn: req.isLoggedIn});
   }); 
 };
 
@@ -53,7 +53,7 @@ exports.getHomeDetails = (req, res, next) => {
         if(!home) {
             res.redirect('/');
         } else {
-            res.render('store/home-detail', { pageTitle: "Home Details", home: home });
+            res.render('store/home-detail', { pageTitle: "Home Details", home: home, isLoggedIn: req.isLoggedIn });
         }
         
     });

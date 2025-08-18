@@ -23,10 +23,20 @@ app.use(express.urlencoded());
 // The parsed data is available on req.body.
 
 app.use(express.static(path.join(rootDir, 'public')));
-
-app.use(storeRouter);
-app.use("/host",hostRouter);
+app.use((req, res, next)=>{
+  req.isLoggedIn = req.get('cookie')?.split('=')[1] || false;
+  next();
+});
 app.use(authRouter);
+app.use(storeRouter);
+app.use("/host", (req, res, next)=>{
+  if(req.isLoggedIn){
+    next();
+  } else {
+    res.redirect("/login");
+  }
+});
+app.use("/host",hostRouter);
 app.use(notFound);
 
 
