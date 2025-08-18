@@ -8,13 +8,13 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-    console.log(req.body);
     req.session.isLoggedIn = true;
     res.redirect('/');
 }; 
 
 exports.postLogout = (req, res, next)=>{
-    res.clearCookie("isLoggedIn");
-    res.redirect('/');
+    req.session.destroy(()=>{
+       res.redirect('/');
+    })
 };
 

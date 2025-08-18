@@ -26,3 +26,4 @@
 - [15. Introduction to MONGODB](NOTES/15_MONGODB/README.md)
 - [16. Introduction to MONGOOSE](NOTES/16_MONGOOSE/README.md)
 - [17. Cookies & Sessions](NOTES/17_C&S/README.md)
+- [18. Authentication & Authorization](NOTES/18_Auth/README.md)

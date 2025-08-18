@@ -253,5 +253,37 @@ app.use((req, res, next)=>{
 ```
 ---
 
-## Saving Session in DB 7.10
+## Saving Session in DB
+```bash
+npm install connect-mongodb-session
+```
+- Use it in app.js
+```js
+const MongoDBStore = require('connect-mongodb-session')(session);
 
+const DB_PATH ="...";
+//---
+const store = new MongoDBStore({//new
+  uri: DB_PATH,
+  collection: 'sessions'
+})
+
+app.use(express.urlencoded());
+
+app.use(session({
+  secret: "Complete Backend",
+  resave: false,
+  saveUninitialized: true,
+  store: store  // new
+}));
+```
+### Destroy Session after logout
+```js
+//authController
+exports.postLogout = (req, res, next)=>{
+    req.session.destroy(()=>{
+       res.redirect('/');
+    })
+};
+```
+---

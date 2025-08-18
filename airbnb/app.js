@@ -4,6 +4,9 @@ const path = require('path');
 // External Module
 const express= require('express');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const DB_PATH ="mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Import Routes
 const storeRouter =require('./routes/storeRouter');
@@ -19,6 +22,11 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+const store = new MongoDBStore({
+  uri: DB_PATH,
+  collection: 'sessions'
+})
+
 app.use(express.urlencoded());
 // It is a middleware in Express.js used to parse incoming requests with URL-encoded payloads, typically from HTML form submissions.
 // The parsed data is available on req.body.
@@ -26,7 +34,8 @@ app.use(express.urlencoded());
 app.use(session({
   secret: "Complete Backend",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: store
 }));
 
 app.use(express.static(path.join(rootDir, 'public')));
@@ -48,7 +57,6 @@ app.use(notFound);
 
 
 const PORT = 3000;
-const DB_PATH ="mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 mongoose.connect(DB_PATH).then(()=>{  
     app.listen(PORT,()=>{
     console.log(`the server is running at http://localhost:${PORT}`)
