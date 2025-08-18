@@ -7,7 +7,17 @@
     <a href="/favourites" class="text-white text-lg hover:underline">Favourites</a>
     <a href="/host/host-home-list" class="text-white text-lg hover:underline">Host Homes</a>
     <a href="/host/add-home" class="text-white text-lg hover:underline">Add Home</a>
-  <% } %>  
+  <% } %> 
+  <% if(!isLoggedIn) { %> 
     <a href="/login" class="text-white text-lg hover:underline">Log in</a>
+   <% } else {%> 
+     <form action="/logout" method="POST">
+        <button
+          type="submit"
+          class="text-white text-lg hover:underline">
+            Logout
+        </button>
+      </form>
+   <% } %> 
   </nav>
 </div>

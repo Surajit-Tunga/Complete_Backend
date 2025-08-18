@@ -2,6 +2,7 @@ const fav = require("../models/fav");
 const Home = require("../models/home");
 
 exports.getHome = (req, res, next)=>{
+    console.log(req.session)
         Home.find().then(registeredHomes => {
             res.render('store/home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Home",isLoggedIn: req.isLoggedIn});
      })

@@ -3,6 +3,7 @@ const path = require('path');
 
 // External Module
 const express= require('express');
+const session = require('express-session');
 
 // Import Routes
 const storeRouter =require('./routes/storeRouter');
@@ -22,9 +23,15 @@ app.use(express.urlencoded());
 // It is a middleware in Express.js used to parse incoming requests with URL-encoded payloads, typically from HTML form submissions.
 // The parsed data is available on req.body.
 
+app.use(session({
+  secret: "Complete Backend",
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.use(express.static(path.join(rootDir, 'public')));
 app.use((req, res, next)=>{
-  req.isLoggedIn = req.get('cookie')?.split('=')[1] || false;
+  req.isLoggedIn = req.session.isLoggedIn;
   next();
 });
 app.use(authRouter);

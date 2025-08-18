@@ -164,3 +164,94 @@ app.use(authRouter);
 ---
 
 ## LogOut Feature
+
+1. After login replace the login with logout button:
+```html
+<% if(!isLoggedIn) { %> 
+    <a href="/login" class="text-white text-lg hover:underline">Log in</a>
+   <% } else {%> 
+     <form action="/logout" method="POST">
+        <button
+          type="submit"
+          class="text-white text-lg hover:underline">
+            Logout
+        </button>
+      </form>
+   <% } %> 
+```
+2. Define Routes & Controllers:
+```js
+authRouter.post("/logout", postLogout);
+```
+```js
+exports.postLogout = (req, res, next)=>{
+    res.clearCookie("isLoggedIn");
+    res.redirect('/');
+};
+```
+---
+
+## Problem with Cookies
+1. Cookies can be intercepted or stolen, posing security risks.
+2. They have limited storage capacity (about 4KB).
+3. Users can delete or modify cookies, leading to data loss or tampering.
+4. Data in cookies is not encrypted, making sensitive information vulnerable.
+5. Storing important info in cookies exposes it to client-side attacks.
+
+---
+
+## What is Sessions
+1. Sessions are server-side storage mechanisms that track user interactions with a website.
+2. They maintain user state & data across multiple requests in a web application.
+3. Sessions enable persistant user experiences by maintaining state between the client & server over stateless HTTP.
+
+---
+
+## Using Sessions
+
+1. Installing express-session
+```bash
+npm install express-session
+```
+2. Add it to app.js
+```js
+const session = require('express-session');
+//-----
+
+app.use(express.urlencoded());
+
+app.use(session({
+  secret: "Complete Backend",
+  resave: false,
+  saveUninitialized: true
+}));
+//---
+```
+---
+## Creating Sessions
+1. Set the session replacing the cookie
+```js
+exports.postLogin = (req, res, next) => {
+    console.log(req.body);
+    req.session.isLoggedIn = true;
+    res.redirect('/');
+};
+```
+2. Update your app.js
+```js
+app.use((req, res, next)=>{
+  req.isLoggedIn = req.get('cookie')?.split('=')[1] || false;
+  next();
+});
+
+// Replace by this --
+
+app.use((req, res, next)=>{
+  req.isLoggedIn = req.session.isLoggedIn;
+  next();
+});
+```
+---
+
+## Saving Session in DB 7.10
+
