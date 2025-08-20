@@ -280,6 +280,142 @@ exports.postSignup= (req, res, next) => {
     });
   </script>
 </div>
-```
-   
+```   
 </details>   
+
+---
+
+## Using Express validator
+1. Install the express-validator
+```bash
+npm install express-validator
+```
+2. Use Validator in post signup validator & updte the controller
+```js
+const {check, validationResult} = require("express-validator");
+
+exports.getSignup = (req, res, next) => {
+    res.render('auth/signup', { 
+        pageTitle: "Sign Up",
+        isLoggedIn: false,
+        errors: [],
+        oldInput: {firstName:"", lastName:"", email:"", password:"", userType: ""},
+
+    });
+};
+exports.postSignup=[ 
+    //FirstName Validation. Here First Name is mendetory to give by the user.
+    check("firstName")
+    .trim()
+    .isLength({min:2})
+    .withMessage("First Name Should be atleast 2 letters.")
+    .matches(/^[A-Za-z\s]+$/)
+    .withMessage("First Name Should contain only letters."),
+
+    //LastName Validation. Here Last Name is mendetory to give by the user.
+    check("lastName")
+    .matches(/^[A-Za-z\s]*$/)
+    .withMessage("Last Name Should contain only letters."),
+    
+    //For email
+    check("email")
+    .isEmail()
+    .withMessage("Please enter a valid email.")
+    .normalizeEmail(),
+
+    // For Password
+    check("password")
+    .isLength({min: 8})
+    .withMessage("Password should be atleast 8 characters long")
+    .matches(/[A-Z]/)
+    .withMessage("Password should contain atleast one uppercase letter")
+    .matches(/[a-z]/)
+    .withMessage("Password should contain atleast one lowercase letter")
+    .matches(/[0-9]/)
+    .withMessage("Password should contain atleast one number")
+    .matches(/[!@&]/)
+    .withMessage("Password should contain atleast one special character")
+    .trim(),
+
+    //Confirm Password with castom validation 
+    check("confirmPassword")
+    .trim()
+    .custom((value, {req}) => {
+      if (value !== req.body.password) {
+        throw new Error("Passwords do not match");
+      }
+      return true;
+    }),
+
+    check("userType")
+    .notEmpty()
+    .withMessage("Please select a user type")
+    .isIn(['guest', 'host'])
+    .withMessage("Invalid user type"),
+
+    check("terms")
+    .notEmpty()
+    .withMessage("Please accept the terms and conditions")
+    .custom((value, {req}) => {
+      if (value !== "on") {
+        throw new Error("Please accept the terms and conditions");
+      }
+    return true;
+    }),
+    
+    (req, res, next) => {
+    const {firstName, lastName, email, password, userType} = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).render("auth/signup", {
+        pageTitle: "Signup",
+        isLoggedIn: false,
+        errors: errors.array().map(err => err.msg),
+        oldInput: {firstName, lastName, email, password, userType},
+      });
+    }
+    res.redirect("/login");
+  } 
+];
+```
+
+3. Fix the UI 
+- Made a partial error.ejs
+```js
+<% if (errors.length > 0) {%>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+    <strong class="font-bold">Error!</strong>
+    <span class="block sm:inline">
+      <% errors.forEach(error => { %>
+        <li><%= error %></li>
+      <% }) %>
+    </span>
+    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+      <i class="fas fa-times"></i>
+    </span>
+  </div>
+<% } %>  
+```
+- Update the SignUp UI:
+```js
+<form action="/signup" method="POST" class="max-w-md mx-auto">
+ 
+        <%- include('../partials/errors') %>
+```
+```js
+  <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+  <div class="relative">
+    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+      <i class="fas fa-user"></i>
+    </span>
+    <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        placeholder="John"
+        value="<%= oldInput.firstName ? oldInput.firstName : '' %>"  ///Update this
+        class="w-full pl-10 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
+        required />
+  </div>      
+ ```         
+---
