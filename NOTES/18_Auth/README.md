@@ -497,4 +497,64 @@ bcrypt.hash(password, 12)
 **Note** Encrypthion is two sided we can decrypt but hashing is onesided it cannot be back to original from.
 
 ## Fix The Login with validation of user
-1. Read email & password from the request body & find the user with the mail from the User collection.
+1. Read email & password from the request body & find the user with the mail from the User collection. 
+```js
+// update postLogin controller
+exports.postLogin = async (req, res, next) => {
+    const {email, password} =req.body;
+    const user =await User.findOne({email});
+    if (!user) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      isLoggedIn: false,
+      errors: ["User does not exist"],
+      oldInput: {email},
+    });
+  }
+    req.session.isLoggedIn = true;
+    res.redirect('/');
+};
+```
+2. If user is found then use bcrypt compare to match the entered password, if password dosenot match then send error other wise create login session and redirect to home.
+```js
+exports.postLogin = async (req, res, next) => {
+    const {email, password} =req.body;
+    const user =await User.findOne({email});
+    if (!user) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      isLoggedIn: false,
+      errors: ["User does not exist"],
+      oldInput: {email},
+    });
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["Invalid Password"],
+      oldInput: {email},
+      user: {},
+    });
+  }
+    req.session.isLoggedIn = true;
+    req.session.user = user;
+    await req.session.save();
+
+    res.redirect('/');
+}; 
+```
+3. fix getLogin:
+```js
+exports.getLogin = (req, res, next) => {
+    res.render('auth/login', { 
+        pageTitle: "login",
+        isLoggedIn: false, 
+         errors: [], //update
+         oldInput: {email: " "}
+    });
+};
+```
+---
