@@ -413,9 +413,88 @@ exports.postSignup=[
         id="firstName"
         name="firstName"
         placeholder="John"
-        value="<%= oldInput.firstName ? oldInput.firstName : '' %>"  ///Update this
+        value="<%= oldInput.firstName ? oldInput.firstName : '' %>"  ///Update this for other
         class="w-full pl-10 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition"
         required />
   </div>      
  ```         
 ---
+
+## User Model
+1. In  models define a user.js model.
+```js
+const mongoose = require('mongoose');
+
+const userSchema = mongoose.Schema({
+  firstName: {
+    type: String,
+    required: [true, 'First name is required']
+  },
+  lastName: String,
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    unique: true
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required']
+  },
+  userType: {
+    type: String,
+    enum: ['guest', 'host'],
+    default: 'guest'
+  },
+  favourites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home'
+  }]
+});
+
+module.exports = mongoose.model('User', userSchema);
+
+```
+2. Update POST Signup Controller
+```js
+// after vlidation
+     const user = new User({firstName, lastName, email, password, userType});
+     user.save().then(()=>{
+       res.redirect("/login");
+     }).catch(err=>{
+      return res.status(422).render("auth/signup", {
+        pageTitle: "Signup",
+        isLoggedIn: false,
+        errors: [err.message],
+        oldInput: {firstName, lastName, email, password, userType},
+      });
+     });
+``` 
+## Encrypting Password    
+1. Install bcryptjs
+```bash
+npm install bcryptjs
+```
+2. Update authcontroller the user saving function 
+```js
+bcrypt.hash(password, 12)
+    .then(hashedPassword => {
+      const user = new User({firstName, lastName, email, password: hashedPassword, userType});
+      return user.save();
+    })
+    .then(() => {
+      res.redirect("/login");
+    }).catch(err => {
+      return res.status(422).render("auth/signup", {
+        pageTitle: "Signup",
+        currentPage: "signup",
+        isLoggedIn: false,
+        errors: [err.message],
+        oldInput: {firstName, lastName, email, userType},
+        user: {},
+      });
+    });
+```
+**Note** Encrypthion is two sided we can decrypt but hashing is onesided it cannot be back to original from.
+
+## Fix The Login with validation of user
+1. Read email & password from the request body & find the user with the mail from the User collection.
