@@ -1,31 +1,54 @@
 # Complete Backend
 
-**Playlist:** [YouTube](https://youtube.com/playlist?list=PL78RhpUUKSwdbr5GMk0GG5LpcWB-MIj2e&si=ssTx-0zRuo2yIt5z)
-
-**Pre-requisites:** Understanding of JavaScript
-
-**airbnb project:** [repo link ](airbnb)
+A comprehensive guide to building backend applications with Node.js and Express.
 
 ---
 
-## Notes
-- [1. INTRODUCTION ](NOTES/1_INTRODUCTION/README.md)
-- [2. INSTALLATION ](NOTES/2_INSTALLATION/README.md)
-- [3. NODE SERVER ](NOTES/3_NODE-SERVER/README.md)
-- [4. REQUEST & RESPONSE ](NOTES/4_REQUEST&RESPONSE/README.md)
-- [5. PARSING REQUEST ](NOTES/5_PARSING-REQUEST/README.md)
-- [6. EVENT LOOP ](NOTES/6_EVENT-LOOP/README.md)
-- [7. NPM & Tools ](NOTES/7_NPM&Tools/README.md)
-- [8. Errors & Debugging ](NOTES/8_Errors&Debugging/README.md)
-- [9. EXPREES JS ](NOTES/9_EXPREESJS/README.md)
-- [10. Styling With Tailwind CSS ](NOTES/10_TailwindCSS/README.md)
-- [11. Dynamic UI Using EJS ](NOTES/11_DynamicUIUsingEJS/README.md)
-- [12. Model View Controller ](NOTES/12_MVC/README.md)
-- [13. Dynamic Path ](NOTES/13_DynamicPath/README.md)
-- [14. Introduction to SQL](NOTES/14_SQL/README.md)
-- [15. Introduction to MONGODB](NOTES/15_MONGODB/README.md)
-- [16. Introduction to MONGOOSE](NOTES/16_MONGOOSE/README.md)
-- [17. Cookies & Sessions](NOTES/17_C&S/README.md)
-- [18. Authentication & Authorization](NOTES/18_Auth/README.md)
-- [19. File Handling](NOTES/19_File/README.md)
-- [20. REST API](NOTES/20_RESTAPI/README.md)
+## Overview
+
+This repository contains resources, notes, and code examples for learning backend development using Node.js, Express, and related technologies.
+
+---
+
+## Prerequisites
+
+- Basic understanding of JavaScript
+
+---
+
+## Project Links
+
+- **Airbnb Project Repository:** [airbnb](airbnb)
+
+---
+
+## Course Playlist
+
+- **YouTube Playlist:** [Complete Backend Course](https://youtube.com/playlist?list=PL78RhpUUKSwdbr5GMk0GG5LpcWB-MIj2e&si=ssTx-0zRuo2yIt5z)
+
+---
+
+## Module Notes
+
+1. [Introduction](NOTES/1_INTRODUCTION/README.md)
+2. [Installation](NOTES/2_INSTALLATION/README.md)
+3. [Node Server](NOTES/3_NODE-SERVER/README.md)
+4. [Request & Response](NOTES/4_REQUEST&RESPONSE/README.md)
+5. [Parsing Request](NOTES/5_PARSING-REQUEST/README.md)
+6. [Event Loop](NOTES/6_EVENT-LOOP/README.md)
+7. [NPM & Tools](NOTES/7_NPM&Tools/README.md)
+8. [Errors & Debugging](NOTES/8_Errors&Debugging/README.md)
+9. [Express JS](NOTES/9_EXPREESJS/README.md)
+10. [Styling with Tailwind CSS](NOTES/10_TailwindCSS/README.md)
+11. [Dynamic UI Using EJS](NOTES/11_DynamicUIUsingEJS/README.md)
+12. [Model View Controller (MVC)](NOTES/12_MVC/README.md)
+13. [Dynamic Path](NOTES/13_DynamicPath/README.md)
+14. [Introduction to SQL](NOTES/14_SQL/README.md)
+15. [Introduction to MongoDB](NOTES/15_MONGODB/README.md)
+16. [Introduction to Mongoose](NOTES/16_MONGOOSE/README.md)
+17. [Cookies & Sessions](NOTES/17_C&S/README.md)
+18. [Authentication & Authorization](NOTES/18_Auth/README.md)
+19. [File Handling](NOTES/19_File/README.md)
+20. [REST API](NOTES/20_RESTAPI/README.md)
+
+- Happy Coding! 🚀
