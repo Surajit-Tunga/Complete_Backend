@@ -8,7 +8,8 @@ exports.getLogin = (req, res, next) => {
         pageTitle: "login",
         isLoggedIn: false,
         errors: [],
-        oldInput: {email: " "}
+        oldInput: {email: " "},
+        user: {}
     });
 };
 exports.getSignup = (req, res, next) => {
@@ -17,7 +18,7 @@ exports.getSignup = (req, res, next) => {
         isLoggedIn: false,
         errors: [],
         oldInput: {firstName:"", lastName:"", email:"", password:"", userType: ""},
-
+        user: {}
     });
 };
 exports.postSignup=[ 
@@ -89,6 +90,7 @@ exports.postSignup=[
         isLoggedIn: false,
         errors: errors.array().map(err => err.msg),
         oldInput: {firstName, lastName, email, password, userType},
+        user: {}
       });
     }
 

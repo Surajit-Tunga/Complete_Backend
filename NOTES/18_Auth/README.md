@@ -558,3 +558,6 @@ exports.getLogin = (req, res, next) => {
 };
 ```
 ---
+
+## Adding User Functions
+1. Make the nav bar items display on the basis of the userType.
