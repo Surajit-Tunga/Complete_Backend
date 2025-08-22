@@ -123,6 +123,7 @@ exports.postLogin = async (req, res, next) => {
       isLoggedIn: false,
       errors: ["User does not exist"],
       oldInput: {email},
+      user: {},
     });
   }
   const isMatch = await bcrypt.compare(password, user.password);

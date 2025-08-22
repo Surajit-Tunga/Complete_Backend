@@ -12,10 +12,13 @@
     <nav class="hidden md:flex gap-6 items-center">
       <a href="/" class="text-white text-lg font-medium hover:underline transition">Home</a>
       <% if(isLoggedIn) { %>  
-        <a href="/bookings" class="text-white text-lg font-medium hover:underline transition">Bookings</a>
-        <a href="/favourites" class="text-white text-lg font-medium hover:underline transition">Favourites</a>
-        <a href="/host/host-home-list" class="text-white text-lg font-medium hover:underline transition">Host Homes</a>
-        <a href="/host/add-home" class="text-white text-lg font-medium hover:underline transition">Add Home</a>
+        <% if(user && user.userType === 'guest') { %>
+              <a href="/bookings" class="text-white text-lg font-medium hover:underline transition">Bookings</a>
+              <a href="/favourites" class="text-white text-lg font-medium hover:underline transition">Favourites</a>
+         <% } else {%>
+              <a href="/host/host-home-list" class="text-white text-lg font-medium hover:underline transition">Host Homes</a>
+             <a href="/host/add-home" class="text-white text-lg font-medium hover:underline transition">Add Home</a>
+        <% } %>
       <% } %> 
       <% if(!isLoggedIn) { %> 
         <a href="/login" class="text-white text-lg font-medium hover:underline transition">Log in</a>
@@ -44,10 +47,13 @@
       </div>
       <a href="/" class="text-red-600 text-lg font-medium hover:underline transition">Home</a>
       <% if(isLoggedIn) { %>  
-        <a href="/bookings" class="text-red-600 text-lg font-medium hover:underline transition">Bookings</a>
-        <a href="/favourites" class="text-red-600 text-lg font-medium hover:underline transition">Favourites</a>
-        <a href="/host/host-home-list" class="text-red-600 text-lg font-medium hover:underline transition">Host Homes</a>
-        <a href="/host/add-home" class="text-red-600 text-lg font-medium hover:underline transition">Add Home</a>
+        <% if(user && user.userType === 'guest') { %>
+             <a href="/bookings" class="text-red-600 text-lg font-medium hover:underline transition">Bookings</a>
+             <a href="/favourites" class="text-red-600 text-lg font-medium hover:underline transition">Favourites</a>
+        <% } else {%>
+             <a href="/host/host-home-list" class="text-red-600 text-lg font-medium hover:underline transition">Host Homes</a>
+             <a href="/host/add-home" class="text-red-600 text-lg font-medium hover:underline transition">Add Home</a>
+        <% } %> 
       <% } %> 
       <% if(!isLoggedIn) { %> 
         <a href="/login" class="text-red-600 text-lg font-medium hover:underline transition">Log in</a>

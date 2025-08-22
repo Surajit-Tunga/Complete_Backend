@@ -1,7 +1,12 @@
 const Home = require("../models/home");
 
 exports.getAddHome =(req, res, next)=>{
-    res.render('host/edit-home',{ pageTitle: "Add Home",isLoggedIn: req.isLoggedIn, editing: false})
+    res.render('host/edit-home',{ 
+        pageTitle: "Add Home",
+        isLoggedIn: req.isLoggedIn,
+        editing: false,
+        user: req.session.user,
+    })
 }
 
 exports.getEditHome =(req, res, next)=>{
@@ -11,14 +16,26 @@ exports.getEditHome =(req, res, next)=>{
         if(!home) {
             res.redirect('/host/host-home-list');
         } else {
-            res.render('host/edit-home',{ pageTitle: "Edit Home", editing: editing, homeId: homeId, home: home, isLoggedIn: req.isLoggedIn});
+            res.render('host/edit-home',{
+                 pageTitle: "Edit Home",
+                 editing: editing, 
+                 homeId: homeId, 
+                 home: home, 
+                 isLoggedIn: req.isLoggedIn,
+                user: req.session.user,
+            });
         }
     })    
 }
 
 exports.getHostHome = (req, res, next)=>{
       Home.find().then(registeredHomes => {
-          res.render('host/host-home-list', {registeredHouse: registeredHomes, pageTitle: "Airbnb Host", isLoggedIn: req.isLoggedIn});
+          res.render('host/host-home-list', {
+            registeredHouse: registeredHomes, 
+            pageTitle: "Airbnb Host", 
+            isLoggedIn: req.isLoggedIn,
+            user: req.session.user,
+       });
     });
 }
 exports.postAddHome = (req, res, next)=>{

@@ -561,3 +561,87 @@ exports.getLogin = (req, res, next) => {
 
 ## Adding User Functions
 1. Make the nav bar items display on the basis of the userType.
+```js
+exports.getHome = (req, res, next)=>{
+        Home.find().then(registeredHomes => {
+            res.render('store/home-list', {
+                registeredHouse: registeredHomes,
+                pageTitle: "Airbnb Home",
+                isLoggedIn: req.isLoggedIn,
+               user: req.session.user, // add this in your all render in your all coltrollers & before login pass null
+         });
+     })
+};
+```
+- Update the Nav:
+```js
+    <nav class="hidden md:flex gap-6 items-center">
+      <a href="/" class="text-white text-lg font-medium hover:underline transition">Home</a>
+      <% if(isLoggedIn) { %>  
+        <% if(user && user.userType === 'guest') { %>
+              <a href="/bookings" class="text-white text-lg font-medium hover:underline transition">Bookings</a>
+              <a href="/favourites" class="text-white text-lg font-medium hover:underline transition">Favourites</a>
+         <% } else {%>
+              <a href="/host/host-home-list" class="text-white text-lg font-medium hover:underline transition">Host Homes</a>
+             <a href="/host/add-home" class="text-white text-lg font-medium hover:underline transition">Add Home</a>
+        <% } %>
+      <% } %> 
+      <% if(!isLoggedIn) { %> 
+        <a href="/login" class="text-white text-lg font-medium hover:underline transition">Log in</a>
+        <a href="/signup" class="text-white text-lg font-medium hover:underline transition">Sign up</a>
+      <% } else { %> 
+        <form action="/logout" method="POST">
+          <button
+            type="submit"
+            class="text-white text-lg font-medium hover:underline transition">
+              Logout
+          </button>
+        </form>
+      <% } %> 
+    </nav>
+```  
+2. Delete the exsistng fav model & make it user specific.  
+```js
+// update the user model
+  favourites: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Home',
+    default: []
+  }
+```
+
+```js
+//fix the controllers
+exports.getFavouritesList = async (req, res, next) => {
+  const userId = req.session.user._id;
+  const user = await User.findById(userId).populate('favourites');
+  res.render("store/fav-list", {
+    favouriteHomes: user.favourites,
+    pageTitle: "My Favourites",
+    isLoggedIn: req.isLoggedIn, 
+    user: req.session.user,
+  });
+};
+exports.addToFavourites = async (req, res, next) => {
+  const homeId = req.body.id;
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
+  if (!user.favourites.includes(homeId)) {
+    user.favourites.push(homeId);
+    await user.save();
+  }
+  res.redirect("/favourites");
+};
+
+exports.deleteFromFavourites = async (req, res, next) => {
+  const homeId = req.params.homeId;
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
+  if (user.favourites.includes(homeId)) {
+    user.favourites = user.favourites.filter(fav => fav != homeId);
+    await user.save();
+  }
+  res.redirect("/favourites");
+};
+```
+---

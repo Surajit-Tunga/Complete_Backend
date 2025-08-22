@@ -1,3 +1,5 @@
+// Is not used. Its for notes
+
 const mongoose = require('mongoose');
 
 const favSchema = mongoose.Schema({
