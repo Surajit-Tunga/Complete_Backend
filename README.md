@@ -1,12 +1,6 @@
 # Complete Backend
 
-A comprehensive guide to building backend applications with Node.js and Express.
-
----
-
-## Overview
-
-This repository contains resources, notes, and code examples for learning backend development using Node.js, Express, and related technologies.
+A comprehensive guide to building backend applications with Node.js and Express. I have made it while learning backend development for quick rivision.
 
 ---
 
