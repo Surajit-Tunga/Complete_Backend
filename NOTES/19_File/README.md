@@ -23,4 +23,94 @@ npm i multer
 ```
 3. Use multer in app.js
 ```js
-9.45
+const multer =require('multer');
+
+//---
+app.use(express.urlencoded());
+app.use(multer().single('photo')); //update 
+app.use(express.static(path.join(rootDir, 'public')));
+```
+4. To log the file
+```js
+exports.postAddHome = (req, res, next)=>{
+    const {houseName,price,location, rating, photo, description} = req.body;
+    const home = new Home({houseName,price,location, rating, photo, description});
+    console.log(req.file); //this
+    home.save().then(()=>{
+        console.log('Home saved.');
+    });
+    res.redirect('/host/host-home-list');
+}
+```
+5. Save The Image
+```js
+//in app.js 
+app.use(multer({dest: 'uploads/'}).single('photo'));
+```
+6. Custom file Name
+```js
+//in app.js
+const randomString = (length) => {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, randomString(10) + '-' + file.originalname);
+  }
+});
+
+
+const multerOptions = {
+  storage
+};
+
+app.use(express.urlencoded());
+
+app.use(multer(multerOptions).single('photo'));
+```
+
+7. Restricting Upload File Types in server
+```js
+//app.js
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const multerOptions = {
+  storage, fileFilter
+};
+```
+8. Save the img properly in controller
+```js
+//in host Controller
+exports.postAddHome = (req, res, next)=>{
+    const {houseName,price,location, rating, description} = req.body;
+      
+    if(!req.file){ // update
+        console.log("No Images Provided");
+        return res.status(422).redirect("/host/add-home");
+    }
+    const photo =req.file.path; //update
+    const home = new Home({houseName,price,location, rating, photo, description});
+    
+    home.save().then(()=>{
+        console.log('Home saved.');
+    });
+    res.redirect('/host/host-home-list');
+}
+```
+10.10
+---

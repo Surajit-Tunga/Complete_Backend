@@ -39,9 +39,15 @@ exports.getHostHome = (req, res, next)=>{
     });
 }
 exports.postAddHome = (req, res, next)=>{
-    const {houseName,price,location, rating, photo, description} = req.body;
+    const {houseName,price,location, rating, description} = req.body;
+      
+    if(!req.file){
+        console.log("No Images Provided");
+        return res.status(422).redirect("/host/add-home");
+    }
+    const photo =req.file.path;
     const home = new Home({houseName,price,location, rating, photo, description});
-    console.log(req.file);
+    
     home.save().then(()=>{
         console.log('Home saved.');
     });
