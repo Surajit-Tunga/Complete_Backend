@@ -5,7 +5,8 @@ const path = require('path');
 const express= require('express');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-
+const { default: mongoose } = require('mongoose');
+const multer =require('multer');
 const DB_PATH ="mongodb+srv://Surajit:root@cluster0.zrnzytr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Import Routes
@@ -13,7 +14,6 @@ const storeRouter =require('./routes/storeRouter');
 const {hostRouter} = require('./routes/hostRouter');
 const rootDir = require("./utils/pathUtils");
 const { notFound } = require('./controllers/error');
-const { default: mongoose } = require('mongoose');
 const { authRouter } = require('./routes/authRouter');
 
 
@@ -39,6 +39,8 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(rootDir, 'public')));
+
+
 app.use((req, res, next)=>{
   req.isLoggedIn = req.session.isLoggedIn;
   next();

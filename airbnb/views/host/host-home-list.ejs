@@ -11,11 +11,7 @@
           
           <!-- Image Container with Relative Position -->
           <div class="relative">
-            <img 
-              src="/Home.jpg" 
-              alt="Home Image" 
-              class="w-full h-52 object-cover"
-            />
+            <img src="<%= home.photo %>" alt="<%= home.houseName %>" class="w-full h-52 object-cover">
             <!-- Rating Badge -->
             <div class="absolute top-2 right-2 bg-rose-100 text-rose-700 text-sm font-semibold px-3 py-1 rounded-full shadow-sm border border-rose-200">
               ⭐ <%= home.rating %>

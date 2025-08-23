@@ -39,8 +39,9 @@ exports.getHostHome = (req, res, next)=>{
     });
 }
 exports.postAddHome = (req, res, next)=>{
-    const {houseName,price,location, rating, description} = req.body;
-    const home = new Home({houseName,price,location, rating, description});
+    const {houseName,price,location, rating, photo, description} = req.body;
+    const home = new Home({houseName,price,location, rating, photo, description});
+    console.log(req.file);
     home.save().then(()=>{
         console.log('Home saved.');
     });
@@ -48,12 +49,13 @@ exports.postAddHome = (req, res, next)=>{
 }
 
 exports.postEditHome = (req, res, next)=>{
-    const {id, houseName, price, location, rating, description} = req.body;
+    const {id, houseName, price, location, rating,photo, description} = req.body;
     Home.findById(id).then((home)=>{
         home.houseName = houseName;
         home.price = price;
         home.location = location;
         home.rating = rating;
+        home.photo = photo;
         home.description = description;
         home.save().then(result =>{
         console.log('Home Updated', result);
