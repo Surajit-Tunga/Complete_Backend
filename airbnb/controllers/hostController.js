@@ -1,4 +1,5 @@
 const Home = require("../models/home");
+const fs =require("fs");
 
 exports.getAddHome =(req, res, next)=>{
     res.render('host/edit-home',{ 
@@ -55,14 +56,21 @@ exports.postAddHome = (req, res, next)=>{
 }
 
 exports.postEditHome = (req, res, next)=>{
-    const {id, houseName, price, location, rating,photo, description} = req.body;
+    const {id, houseName, price, location, rating, description} = req.body;
     Home.findById(id).then((home)=>{
         home.houseName = houseName;
         home.price = price;
         home.location = location;
         home.rating = rating;
-        home.photo = photo;
         home.description = description;
+        if (req.file) {
+            fs.unlink(home.photo, (err)=>{
+               if(err){
+                console.log(err);
+               }
+            });
+             home.photo = req.file.path;
+        }
         home.save().then(result =>{
         console.log('Home Updated', result);
     }).catch(err=>{

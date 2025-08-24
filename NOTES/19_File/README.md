@@ -112,5 +112,75 @@ exports.postAddHome = (req, res, next)=>{
     res.redirect('/host/host-home-list');
 }
 ```
-10.10
----
+9. Update editng:
+```js
+exports.postEditHome = (req, res, next)=>{
+    const {id, houseName, price, location, rating, description} = req.body;
+    Home.findById(id).then((home)=>{
+        home.houseName = houseName;
+        home.price = price;
+        home.location = location;
+        home.rating = rating;
+        home.description = description;
+        if (req.file) { //update
+            home.photo = req.file.path;
+        }
+        home.save().then(result =>{
+        console.log('Home Updated', result);
+    }).catch(err=>{
+        console.log(err);
+    })
+    res.redirect('/host/host-home-list');   
+  }).catch(err=>{
+        console.log(err);
+    })    
+}
+```
+10. Serving The Saved Data
+```js
+//update app.js
+app.use(express.static(path.join(rootDir, 'public')));
+
+//update
+app.use("/uploads", express.static(path.join(rootDir, 'uploads')))
+app.use("/host/uploads", express.static(path.join(rootDir, 'uploads')))
+app.use("/homes/uploads", express.static(path.join(rootDir, 'uploads')))
+
+app.use(session({
+  secret: "Complete Backend",
+  resave: false,
+  saveUninitialized: true,
+  store: store
+}));
+```
+11. Deleting Files
+```js
+const fs =require("fs");
+
+exports.postEditHome = (req, res, next)=>{
+    const {id, houseName, price, location, rating, description} = req.body;
+    Home.findById(id).then((home)=>{
+        home.houseName = houseName;
+        home.price = price;
+        home.location = location;
+        home.rating = rating;
+        home.description = description;
+        if (req.file) {
+            fs.unlink(home.photo, (err)=>{
+               if(err){
+                console.log(err);
+               }
+            });
+             home.photo = req.file.path;
+        }
+        home.save().then(result =>{
+        console.log('Home Updated', result);
+    }).catch(err=>{
+        console.log(err);
+    })
+    res.redirect('/host/host-home-list');   
+  }).catch(err=>{
+        console.log(err);
+    })    
+} 
+```

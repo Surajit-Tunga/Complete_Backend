@@ -63,6 +63,9 @@ app.use(express.urlencoded());
 // The parsed data is available on req.body.
 app.use(multer(multerOptions ).single('photo'));
 app.use(express.static(path.join(rootDir, 'public')));
+app.use("/uploads", express.static(path.join(rootDir, 'uploads')))
+app.use("/host/uploads", express.static(path.join(rootDir, 'uploads')))
+app.use("/homes/uploads", express.static(path.join(rootDir, 'uploads')))
 
 app.use(session({
   secret: "Complete Backend",
