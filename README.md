@@ -44,6 +44,6 @@ A comprehensive guide to building backend applications with Node.js and Express.
 17. [Cookies & Sessions](NOTES/17_C&S/README.md)
 18. [Authentication & Authorization](NOTES/18_Auth/README.md)
 19. [File Handling](NOTES/19_File/README.md)
-20. [REST API](NOTES/20_RESTAPI/README.md)
+20. [REST API & JSON Request](NOTES/20_RESTAPI/README.md)
 
 - Happy Coding! 🚀
