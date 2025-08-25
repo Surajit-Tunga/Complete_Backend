@@ -42,6 +42,9 @@
 6. Code on Demand (Optional): Servers can extend client functionality by sending executable. 
 ---
 
-## Creating A TODO APP
+# Creating A TODO APP
+
+## Initial Setup
 - Make two separate folder for frontend & backend then clone the above repo in frontend.
 - **Clone The Repo:** [todoapp](https://github.com/Complete-Coding/React_Complete_YouTube/tree/main/Projects/6-todo-app-version-three)
+- From the airbnb project cpoy the backend required structure.
