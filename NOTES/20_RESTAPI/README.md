@@ -50,7 +50,9 @@
 - **Clone The Repo:** [todoapp](https://github.com/Complete-Coding/React_Complete_YouTube/tree/main/Projects/6-todo-app-version-three)
 - From the airbnb project cpoy the backend required structure.
 
-## Implementaion
+---
+
+## Backend Implementaion
 
 ### Add 404 Handling
 - In backend/controller/error.js
@@ -175,3 +177,146 @@ mongoose.connect(DB_PATH).then(()=>{
   console.log(err);
 });
 ```
+---
+
+## Connection with frontend
+- In src of the frontend folder make a folder called services.
+- In fronend/src/services/itemsService.js
+```js
+export const addItemToServer = async (task, date) => {
+  const response = await fetch("http://localhost:3000/api/todo", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ task, date }),
+  });
+  const item = await response.json();
+  return mapServerItemToLocalItem(item);
+};
+
+export const getItemsFromServer = async () => {
+  const response = await fetch("http://localhost:3000/api/todo");
+  const items = await response.json();
+  return items.map(mapServerItemToLocalItem);
+};
+
+export const markItemCompletedOnServer = async (id) => {
+  const response = await fetch(
+    `http://localhost:3000/api/todo/${id}/completed`,
+    {
+      method: "PUT",
+    }
+  );
+  const item = await response.json();
+  return mapServerItemToLocalItem(item);
+};
+
+export const deleteItemFromServer = async (id) => {
+  await fetch(`http://localhost:3000/api/todo/${id}`, {
+    method: "DELETE",
+  });
+  return id;
+};
+
+const mapServerItemToLocalItem = (serverItem) => {
+  return {
+    id: serverItem._id,
+    name: serverItem.task,
+    dueDate: serverItem.date,
+    completed: serverItem.completed,
+    createdAt: serverItem.createdAt,
+    updatedAt: serverItem.updatedAt,
+  };
+};
+```
+- update app.jsx importing the services
+```jsx
+import AppName from "./components/AppName";
+import AddTodo from "./components/AddTodo";
+import TodoItems from "./components/TodoItems";
+import WelcomeMessage from "./components/WelcomeMessage";
+import { useEffect, useState } from "react";
+import {
+  addItemToServer,
+  deleteItemFromServer,
+  getItemsFromServer,
+  markItemCompletedOnServer,
+} from "./services/itemsService";
+import "./App.css";
+
+function App() {
+  const [todoItems, setTodoItems] = useState([]);
+
+  useEffect(() => {
+    getItemsFromServer().then((initialItems) => {
+      // Add completed property if it doesn't exist
+      const itemsWithCompletedStatus = initialItems.map((item) => ({
+        ...item,
+        completed: item.completed || false,
+      }));
+      setTodoItems(itemsWithCompletedStatus);
+    });
+  }, []);
+
+  const handleNewItem = async (itemName, itemDueDate) => {
+    console.log(`New Item Added: ${itemName} Date:${itemDueDate}`);
+    const item = await addItemToServer(itemName, itemDueDate);
+    // Add completed property
+    const newItem = { ...item, completed: false };
+    const newTodoItems = [...todoItems, newItem];
+    setTodoItems(newTodoItems);
+  };
+
+  const handleDeleteItem = async (id) => {
+    const deletedId = await deleteItemFromServer(id);
+    const newTodoItems = todoItems.filter((item) => item.id !== deletedId);
+    setTodoItems(newTodoItems);
+  };
+
+  const handleToggleComplete = async (id) => {
+    await markItemCompletedOnServer(id);
+    // Find the item and toggle its completed status
+    const updatedItems = todoItems.map((item) => {
+      if (item.id === id) {
+        // Create a new object with toggled 'completed' property
+        return { ...item, completed: true };
+      }
+      return item;
+    });
+
+    // Update state
+    setTodoItems(updatedItems);
+  };
+
+  // Sort items: incomplete items first, then completed items
+  const sortedItems = [...todoItems].sort((a, b) => {
+    if (a.completed === b.completed) return 0;
+    return a.completed ? 1 : -1;
+  });
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 py-12 px-4">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+          <div className="p-8">
+            <AppName />
+            <AddTodo onNewItem={handleNewItem} />
+            {todoItems.length === 0 && <WelcomeMessage></WelcomeMessage>}
+            <TodoItems
+              todoItems={sortedItems}
+              onDeleteClick={handleDeleteItem}
+              onToggleComplete={handleToggleComplete}
+            ></TodoItems>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+```
+**RUN** start both backend & frontend server to see.
+**UI Needs Improvement!!**
+---
