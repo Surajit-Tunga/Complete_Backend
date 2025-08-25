@@ -43,3 +43,5 @@
 ---
 
 ## Creating A TODO APP
+- Make two separate folder for frontend & backend then clone the above repo in frontend.
+- **Clone The Repo:** [todoapp](https://github.com/Complete-Coding/React_Complete_YouTube/tree/main/Projects/6-todo-app-version-three)
