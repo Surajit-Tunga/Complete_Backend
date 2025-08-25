@@ -317,6 +317,6 @@ function App() {
 
 export default App;
 ```
-**RUN** start both backend & frontend server to see.
-**UI Needs Improvement!!**
+- start both backend & frontend server to see teh app.
+- **UI Needs Improvement!!**
 ---
